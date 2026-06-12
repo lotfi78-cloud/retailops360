@@ -1,0 +1,3154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>RetailOps 360</title>
+<meta name="application-name" content="RetailOps 360">
+<meta name="apple-mobile-web-app-title" content="RetailOps 360">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#5B5FED">
+<meta name="description" content="Application d'audit et de pilotage multisite retail alimentaire">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%235B5FED'/%3E%3Cstop offset='50%25' stop-color='%237C3AED'/%3E%3Cstop offset='100%25' stop-color='%23FF6B6B'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='192' height='192' rx='42' fill='url(%23g)'/%3E%3Ctext x='96' y='118' font-family='Arial Black' font-size='80' font-weight='900' text-anchor='middle' fill='white'%3ER%3C/text%3E%3Ctext x='96' y='158' font-family='Arial' font-size='22' font-weight='700' text-anchor='middle' fill='rgba(255,255,255,0.85)'%3E360%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%235B5FED'/%3E%3Cstop offset='100%25' stop-color='%23FF6B6B'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Ctext x='32' y='44' font-family='Arial Black' font-size='34' font-weight='900' text-anchor='middle' fill='white'%3ER%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="data:application/json,%7B%22name%22%3A%22RetailOps%20360%22%2C%22short_name%22%3A%22RetailOps%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%235B5FED%22%2C%22theme_color%22%3A%22%235B5FED%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%2520viewBox%3D'0%25200%2520192%2520192'%253E%253Crect%2520width%3D'192'%2520height%3D'192'%2520rx%3D'42'%2520fill%3D'%25235B5FED'%2F%253E%253Ctext%2520x%3D'96'%2520y%3D'118'%2520font-size%3D'80'%2520text-anchor%3D'middle'%2520fill%3D'white'%253ER%253C%2Ftext%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  /* Brand palette */
+  --brand: #5B5FED;
+  --brand-dark: #4338CA;
+  --brand-light: #818CF8;
+  --brand-bg: #EEF0FF;
+  --coral: #FF6B6B;
+  --coral-bg: #FFE8E8;
+  --lemon: #FCD34D;
+  --lemon-bg: #FEF3C7;
+  --emerald: #10B981;
+  --emerald-bg: #D1FAE5;
+  --amber: #F59E0B;
+  --amber-bg: #FEF3C7;
+  --rose: #F43F5E;
+  --rose-bg: #FFE4E6;
+  --cyan: #06B6D4;
+  --cyan-bg: #CFFAFE;
+  --pink: #EC4899;
+  --pink-bg: #FCE7F3;
+  --orange: #F97316;
+  --orange-bg: #FFEDD5;
+
+  /* Theme accent colors */
+  --t-tc: #F97316;     --t-tc-bg: #FFF7ED;
+  --t-gestion: #6366F1; --t-gestion-bg: #EEF2FF;
+  --t-proprete: #06B6D4; --t-proprete-bg: #ECFEFF;
+  --t-rh: #EC4899;     --t-rh-bg: #FDF2F8;
+  --t-client: #F43F5E; --t-client-bg: #FFF1F2;
+  --t-politique: #EAB308; --t-politique-bg: #FEFCE8;
+  --t-hygiene: #10B981; --t-hygiene-bg: #ECFDF5;
+
+  /* Neutrals */
+  --bg: #F8F7FC;
+  --bg-grad: linear-gradient(135deg, #F8F7FC 0%, #EEF0FF 100%);
+  --surface: #FFFFFF;
+  --surface-2: #FAFAFE;
+  --border: rgba(91, 95, 237, 0.10);
+  --border-2: rgba(91, 95, 237, 0.18);
+  --text: #1F1B3D;
+  --text-2: #5B5F76;
+  --text-3: #9CA0BA;
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --radius-lg: 18px;
+  --shadow-sm: 0 1px 2px rgba(31, 27, 61, 0.05);
+  --shadow: 0 2px 8px rgba(31, 27, 61, 0.06);
+  --shadow-lg: 0 8px 24px rgba(91, 95, 237, 0.12);
+  --shadow-glow: 0 0 0 4px rgba(91, 95, 237, 0.15);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-grad); min-height: 100vh; color: var(--text); font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+.app { max-width: 880px; margin: 0 auto; padding-bottom: 4rem; }
+
+/* HEADER */
+.topbar {
+  background: linear-gradient(135deg, #1F1B3D 0%, #2D2660 100%);
+  border-bottom: none;
+  padding: 0 1rem;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 4px 20px rgba(31,27,61,0.35);
+}
+.topbar-inner { display: flex; align-items: center; gap: 0; max-width: 880px; margin: 0 auto; overflow-x: auto; }
+.top-logo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 19px; font-weight: 800;
+  background: linear-gradient(135deg, #fff 0%, var(--lemon) 60%, var(--coral) 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding: 17px 20px 17px 4px; white-space: nowrap;
+  letter-spacing: -0.02em; flex-shrink: 0;
+}
+.top-logo::before { content: '◆'; margin-right: 7px; -webkit-text-fill-color: var(--lemon); }
+.nav-tab {
+  padding: 18px 15px; font-size: 14px; color: rgba(255,255,255,0.55);
+  cursor: pointer; border-bottom: 3px solid transparent;
+  white-space: nowrap; transition: all .2s; font-weight: 600;
+  position: relative; letter-spacing: 0.01em;
+}
+.nav-tab:hover { color: rgba(255,255,255,0.9); }
+.nav-tab.active {
+  color: #fff; border-bottom-color: var(--lemon); font-weight: 700;
+}
+
+/* HERO BANNER */
+.hero {
+  background: linear-gradient(135deg, var(--brand) 0%, #7C3AED 50%, var(--coral) 100%);
+  color: white; padding: 1.75rem 1.5rem; border-radius: var(--radius-lg);
+  margin: 1.25rem 1rem 1.5rem; position: relative; overflow: hidden;
+  box-shadow: 0 8px 32px rgba(91,95,237,0.35);
+}
+.hero::before {
+  content: ''; position: absolute; top: -50%; right: -20%;
+  width: 60%; height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.22) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 6px; }
+.hero-sub { font-size: 15px; opacity: 0.92; font-weight: 400; }
+
+/* SECTIONS */
+.section { display: none; padding: 0 1rem 3rem; }
+.section.active { display: block; animation: fadeIn .3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* CARDS */
+.card {
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: var(--radius); padding: 1.4rem 1.5rem; margin-bottom: 1.1rem;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow .2s;
+}
+.card:hover { box-shadow: var(--shadow); }
+.card-head {
+  font-size: 13px; font-weight: 800; letter-spacing: 0.05em;
+  text-transform: uppercase; color: var(--text-2);
+  margin-bottom: 1.1rem; display: flex; align-items: center; gap: 10px;
+}
+.card-head-icon {
+  width: 34px; height: 34px; border-radius: 10px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--brand-bg); color: var(--brand);
+  font-size: 17px;
+}
+
+/* FORMS */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-grid.full { grid-template-columns: 1fr; }
+.form-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+.fgroup label { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+.fgroup input, .fgroup select, .fgroup textarea {
+  width: 100%; padding: 13px 14px; border: 2px solid var(--border-2); border-radius: var(--radius-sm);
+  font-size: 15px; background: var(--surface); color: var(--text);
+  transition: all .15s; font-family: inherit;
+}
+.fgroup input:focus, .fgroup select:focus, .fgroup textarea:focus {
+  outline: none; border-color: var(--brand); box-shadow: var(--shadow-glow);
+}
+.fgroup textarea { resize: vertical; min-height: 68px; }
+.fgroup input[type="date"], .fgroup input[type="time"] { font-family: inherit; }
+
+/* KPI GRID */
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)); gap: 12px; }
+.kpi-box {
+  position: relative;
+  background: var(--surface);
+  border-radius: var(--radius); padding: 1.1rem 1.1rem .9rem;
+  border: 2px solid var(--border); overflow: hidden;
+  box-shadow: var(--shadow-sm); transition: transform .15s, box-shadow .15s;
+}
+.kpi-box:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.kpi-box::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+}
+.kpi-box:nth-child(3n+1)::before { background: linear-gradient(90deg, #FF6B6B, #EC4899); }
+.kpi-box:nth-child(3n+2)::before { background: linear-gradient(90deg, #06B6D4, #5B5FED); }
+.kpi-box:nth-child(3n+3)::before { background: linear-gradient(90deg, #FCD34D, #F97316); }
+.kpi-box::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
+  background: linear-gradient(to top, rgba(91,95,237,0.04), transparent);
+  pointer-events: none;
+}
+.kpi-lbl { font-size: 11px; color: var(--text-2); font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+.kpi-row { display: flex; gap: 6px; align-items: center; }
+.kpi-row input {
+  flex: 1; min-width: 0; padding: 8px 9px; font-size: 15px; font-weight: 600;
+  border: 2px solid var(--border-2); border-radius: 8px; font-family: inherit;
+  font-variant-numeric: tabular-nums; color: var(--text); background: var(--surface-2);
+}
+.kpi-row input:focus { outline: none; border-color: var(--brand); background: #fff; }
+.kpi-row input::placeholder { font-size: 13px; font-weight: 400; }
+.kpi-sep { font-size: 12px; color: var(--text-3); flex-shrink: 0; font-weight: 700; }
+.kpi-evol { font-size: 13px; font-weight: 800; padding: 5px 11px; border-radius: 10px; margin-top: 8px; display: inline-block; font-variant-numeric: tabular-nums; }
+.ev-pos { background: #D1FAE5; color: #065F46; border: 1.5px solid #6EE7B7; }
+.ev-neg { background: #FFE4E6; color: #9F1239; border: 1.5px solid #FCA5A5; }
+.ev-neu { background: #F1F5F9; color: #64748B; border: 1.5px solid #E2E8F0; }
+
+/* CHECKLIST THEMES */
+.theme {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); margin-bottom: .75rem; overflow: hidden;
+  transition: all .2s; box-shadow: var(--shadow-sm);
+  position: relative;
+}
+.theme::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+  background: var(--theme-color, var(--brand));
+}
+.theme.t-tc { --theme-color: var(--t-tc); --theme-bg: var(--t-tc-bg); }
+.theme.t-gestion { --theme-color: var(--t-gestion); --theme-bg: var(--t-gestion-bg); }
+.theme.t-proprete { --theme-color: var(--t-proprete); --theme-bg: var(--t-proprete-bg); }
+.theme.t-rh { --theme-color: var(--t-rh); --theme-bg: var(--t-rh-bg); }
+.theme.t-client { --theme-color: var(--t-client); --theme-bg: var(--t-client-bg); }
+.theme.t-politique { --theme-color: var(--t-politique); --theme-bg: var(--t-politique-bg); }
+.theme.t-hygiene { --theme-color: var(--t-hygiene); --theme-bg: var(--t-hygiene-bg); }
+
+.theme:hover { box-shadow: var(--shadow); }
+.theme-hd { display: flex; justify-content: space-between; align-items: center; padding: .875rem 1rem .875rem 1.25rem; cursor: pointer; user-select: none; transition: background .15s; }
+.theme-hd:hover { background: var(--theme-bg); }
+.theme-title { font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+.theme-emoji {
+  width: 32px; height: 32px; border-radius: 10px;
+  background: var(--theme-bg); display: inline-flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.theme-right { display: flex; align-items: center; gap: 10px; }
+.theme-badge {
+  font-size: 12px; font-weight: 700; padding: 4px 11px; border-radius: 16px;
+  background: var(--surface-2); border: 1.5px solid var(--border-2); color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+.theme-body { display: none; border-top: 1px solid var(--border); }
+.theme-body.open { display: block; }
+.theme-chevron { transition: transform .2s; color: var(--text-3); }
+.theme-body.open ~ * .theme-chevron, .theme-body.open .theme-chevron { transform: rotate(180deg); }
+.theme-hd[data-open="true"] .theme-chevron { transform: rotate(180deg); }
+
+/* RAYON TABS */
+.rayon-row {
+  display: flex; gap: 6px; flex-wrap: wrap; padding: .75rem 1rem;
+  border-bottom: 1px solid var(--border); background: var(--theme-bg, var(--surface-2));
+}
+.rtab {
+  font-size: 12px; padding: 5px 12px; border-radius: 100px;
+  border: 1.5px solid var(--border-2); cursor: pointer; color: var(--text-2);
+  background: var(--surface); font-weight: 500; transition: all .15s;
+}
+.rtab:hover { border-color: var(--theme-color, var(--brand)); color: var(--theme-color, var(--brand)); }
+.rtab.active {
+  background: var(--theme-color, var(--brand)); color: #fff;
+  border-color: var(--theme-color, var(--brand)); font-weight: 600;
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--theme-color, var(--brand)) 30%, transparent);
+}
+.rayon-panel { padding: .5rem 1.25rem .75rem; }
+.rayon-panel.hidden { display: none; }
+
+/* CRITERIA */
+.crit { padding: .625rem 0; border-bottom: 1px solid var(--border); }
+.crit:last-child { border-bottom: none; }
+.crit-top { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: start; }
+.crit-lbl { font-size: 15px; padding-top: 3px; line-height: 1.45; color: var(--text); font-weight: 500; }
+.sbtn-row { display: flex; gap: 5px; }
+.sbtn {
+  padding: 8px 14px; border-radius: 9px; border: 2px solid var(--border-2);
+  font-size: 13px; font-weight: 800; cursor: pointer; background: var(--surface);
+  color: var(--text-3); transition: all .12s; font-family: inherit; letter-spacing: 0.03em;
+}
+.sbtn:hover { border-color: var(--text-2); color: var(--text); transform: translateY(-1px); }
+.sbtn.ok { background: #D1FAE5; color: #065F46; border-color: #10B981; }
+.sbtn.ko { background: #FFE4E6; color: #9F1239; border-color: #F43F5E; }
+.sbtn.na { background: #F1F5F9; color: #475569; border-color: #94A3B8; }
+.note-btn {
+  font-size: 13px; color: var(--brand); cursor: pointer; padding-top: 5px;
+  font-weight: 600; white-space: nowrap;
+}
+.note-btn:hover { color: var(--brand-dark); }
+.crit-extra { margin-top: 8px; }
+.crit-extra textarea {
+  width: 100%; font-size: 12px; padding: 8px 10px; border: 1.5px solid var(--border-2);
+  border-radius: 8px; background: var(--surface); resize: vertical;
+  min-height: 48px; font-family: inherit; color: var(--text);
+}
+.crit-extra textarea:focus { outline: none; border-color: var(--brand); }
+
+/* PHOTO UPLOAD */
+.photo-zone { margin-top: 10px; }
+.photo-drop-area {
+  border: 2px dashed var(--border-2,#2E2F42);
+  border-radius: 10px; padding: 14px 12px; text-align: center;
+  cursor: pointer; transition: all .2s; background: var(--surface-2,#12131C);
+  position: relative;
+}
+.photo-drop-area:hover, .photo-drop-area.drag-over {
+  border-color: var(--brand,#5B5FED); background: var(--brand-bg,rgba(91,95,237,0.08));
+}
+.photo-drop-area.drag-over { border-style: solid; }
+.photo-drop-label {
+  font-size: 12px; color: var(--text-2,#9292A8); font-weight: 600;
+  pointer-events: none; display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.photo-drop-sub { font-size: 11px; color: var(--text-3,#6B6B82); margin-top: 3px; }
+.photo-file-input { display: none; }
+.photo-loading { font-size: 11px; color: var(--brand,#5B5FED); margin-top: 6px; display: none; }
+.photo-thumbs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.photo-thumb {
+  position: relative; width: 72px; height: 72px; border-radius: 10px; overflow: hidden;
+  border: 2px solid var(--border-2,#2E2F42); box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+}
+.photo-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo-del {
+  position: absolute; top: 2px; right: 2px;
+  background: rgba(0,0,0,0.75); color: #fff; border: none; border-radius: 6px;
+  cursor: pointer; font-size: 12px; padding: 2px 6px; line-height: 1; font-weight: 700;
+}
+
+/* KO ACTIONS */
+.ko-panel {
+  background: linear-gradient(135deg, var(--rose-bg) 0%, var(--coral-bg) 100%);
+  border-radius: 12px; padding: .875rem 1rem; margin-bottom: 8px;
+  border: 1.5px solid #FCA5A5;
+}
+.ko-panel-title {
+  font-size: 13px; font-weight: 700; color: #BE123C; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+.ko-action-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ko-action-row input, .ko-action-row + div input {
+  font-size: 12px; padding: 7px 10px; border: 1.5px solid #FECDD3; border-radius: 7px;
+  background: #fff; color: var(--text); font-family: inherit;
+}
+.ko-action-row input:focus, .ko-action-row + div input:focus { outline: none; border-color: var(--rose); }
+
+/* SCORE RING */
+.score-ring-wrap { text-align: center; padding: 1.5rem 1rem; }
+.score-ring {
+  width: 130px; height: 130px; border-radius: 50%; margin: 0 auto 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px; font-weight: 800; font-family: 'Plus Jakarta Sans', sans-serif;
+  position: relative; letter-spacing: -0.03em;
+}
+.score-ring::before {
+  content: ''; position: absolute; inset: 8px;
+  background: var(--surface); border-radius: 50%; z-index: 0;
+}
+.score-ring > span { position: relative; z-index: 1; }
+.score-ring.critical { background: conic-gradient(var(--rose) calc(var(--p,0)*1%), #FFE4E6 0); color: var(--rose); }
+.score-ring.correct { background: conic-gradient(var(--amber) calc(var(--p,0)*1%), var(--lemon-bg) 0); color: var(--amber); }
+.score-ring.good { background: conic-gradient(var(--emerald) calc(var(--p,0)*1%), var(--emerald-bg) 0); color: var(--emerald); }
+.score-lbl { font-weight: 700; font-size: 15px; font-family: 'Plus Jakarta Sans', sans-serif; }
+.score-sub { font-size: 13px; color: var(--text-2); margin-top: 6px; }
+.score-sub .ok { color: var(--emerald); font-weight: 600; }
+.score-sub .ko { color: var(--rose); font-weight: 600; }
+.score-legend {
+  font-size: 11px; color: var(--text-3); margin-top: 10px; display: inline-flex;
+  align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center;
+}
+.score-legend span { display: inline-flex; align-items: center; gap: 4px; }
+.score-legend span::before { content: ''; width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.score-legend .cr::before { background: var(--rose); }
+.score-legend .co::before { background: var(--amber); }
+.score-legend .gd::before { background: var(--emerald); }
+
+/* THEME SCORE BARS */
+.theme-scores-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 1.25rem; }
+.ts-item { display: flex; align-items: center; gap: 10px; padding: 6px 10px; border-radius: 10px; background: var(--surface-2); }
+.ts-item-lbl { font-size: 12px; min-width: 130px; flex-shrink: 0; font-weight: 500; color: var(--text); }
+.ts-bar-outer { flex: 1; height: 7px; background: rgba(91, 95, 237, 0.08); border-radius: 100px; overflow: hidden; }
+.ts-bar { height: 100%; border-radius: 100px; transition: width .5s cubic-bezier(0.4, 0, 0.2, 1); }
+.ts-pct { font-weight: 700; min-width: 38px; text-align: right; font-size: 12px; font-variant-numeric: tabular-nums; }
+
+/* BUTTONS */
+.btn {
+  display: inline-flex; align-items: center; gap: 7px; padding: 10px 18px;
+  border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer;
+  border: 1.5px solid; transition: all .15s; font-family: inherit;
+  white-space: nowrap;
+}
+.btn:active { transform: translateY(1px); }
+.btn-primary {
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+  color: #fff; border-color: var(--brand);
+  box-shadow: 0 4px 14px rgba(91,95,237,0.4);
+}
+.btn-primary:hover { box-shadow: 0 6px 20px rgba(91,95,237,0.55); transform: translateY(-2px); }
+.btn-secondary { background: var(--surface); color: var(--text-2); border-color: var(--border-2); font-size: 14px; padding: 11px 18px; }
+.btn-secondary:hover { background: var(--surface-2); border-color: var(--brand); color: var(--brand); }
+.btn-green {
+  background: linear-gradient(135deg, var(--emerald) 0%, #059669 100%);
+  color: #fff; border-color: var(--emerald);
+  box-shadow: 0 4px 14px rgba(16,185,129,0.4);
+}
+.btn-green:hover { box-shadow: 0 6px 20px rgba(16,185,129,0.55); transform: translateY(-2px); }
+.btn-notion {
+  background: linear-gradient(135deg, #1F1B3D 0%, #000 100%);
+  color: #fff; border-color: #000; font-size: 14px;
+}
+.btn-notion:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.35); }
+.btn-claude {
+  background: linear-gradient(135deg, #C96442 0%, #A855F7 100%);
+  color: #fff; border: none;
+  box-shadow: 0 4px 14px rgba(168,85,247,0.4);
+}
+.btn-claude:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(168,85,247,0.55); }
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; margin-top: 1.25rem; }
+
+/* CLAUDE CONCLUSION */
+.claude-box {
+  background: linear-gradient(135deg, #FDF4FF 0%, #EEF2FF 100%);
+  border: 2px solid #E9D5FF; border-radius: var(--radius);
+  padding: 1.25rem; margin-top: 1rem; position: relative; overflow: hidden;
+}
+.claude-box::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, #C96442, #A855F7);
+}
+.claude-box-head {
+  font-size: 13px; font-weight: 800; color: #7C3AED; margin-bottom: .75rem;
+  display: flex; align-items: center; gap: 7px; text-transform: uppercase; letter-spacing: 0.05em;
+}
+.claude-output { font-size: 15px; line-height: 1.75; color: var(--text); white-space: pre-wrap; }
+.claude-output.loading { color: var(--text-3); font-style: italic; }
+.claude-edit {
+  width: 100%; font-size: 15px; padding: 12px; border: 2px solid #E9D5FF;
+  border-radius: 8px; min-height: 130px; resize: vertical; line-height: 1.65;
+  margin-top: 6px; background: #fff; color: var(--text); font-family: inherit;
+}
+
+/* DASHBOARD KPI CARDS */
+.dash-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)); gap: 14px; margin-bottom: 1.5rem; }
+.dash-kpi {
+  background: var(--surface); border: 2px solid var(--border);
+  border-radius: var(--radius); padding: 1.25rem 1.25rem 1.4rem;
+  position: relative; overflow: hidden; box-shadow: var(--shadow-sm);
+  transition: transform .2s, box-shadow .2s;
+}
+.dash-kpi:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.dash-kpi::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+}
+.dash-kpi.c1::before { background: linear-gradient(90deg, #5B5FED, #818CF8); }
+.dash-kpi.c2::before { background: linear-gradient(90deg, #FF6B6B, #EC4899); }
+.dash-kpi.c3::before { background: linear-gradient(90deg, #06B6D4, #10B981); }
+.dash-kpi.c4::before { background: linear-gradient(90deg, #F59E0B, #F97316); }
+.dash-kpi-val {
+  font-size: 38px; font-weight: 800; line-height: 1.05; margin: 10px 0 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.03em; font-variant-numeric: tabular-nums;
+}
+.dash-kpi-lbl { font-size: 12px; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.07em; font-weight: 800; }
+.dash-kpi-icon {
+  width: 36px; height: 36px; border-radius: 11px;
+  display: inline-flex; align-items: center; justify-content: center; font-size: 18px;
+  margin-bottom: 4px;
+}
+.c1 .dash-kpi-icon { background: #EEF0FF; color: #5B5FED; }
+.c2 .dash-kpi-icon { background: #FFE8E8; color: #FF6B6B; }
+.c3 .dash-kpi-icon { background: #CFFAFE; color: #06B6D4; }
+.c4 .dash-kpi-icon { background: #FEF3C7; color: #F59E0B; }
+
+/* STORE RANKING */
+.rank-hdr {
+  display: grid; grid-template-columns: minmax(0,1fr) 70px 60px 100px;
+  gap: 12px; padding: .6rem .875rem .8rem; border-bottom: 2px solid var(--border);
+  font-size: 11px; color: var(--text-3); font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.07em;
+}
+.store-rank-row {
+  display: grid; grid-template-columns: minmax(0,1fr) 70px 60px 100px;
+  gap: 12px; align-items: center; padding: .875rem;
+  border-bottom: 1px solid var(--border); font-size: 15px;
+  transition: background .15s;
+}
+.store-rank-row:last-child { border-bottom: none; }
+.store-rank-row:hover { background: var(--surface-2); }
+.store-rank-row .name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: flex; align-items: center; gap: 8px; }
+.rank-pos { width: 26px; height: 26px; border-radius: 50%; background: var(--brand-bg); color: var(--brand); display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0; }
+.rank-pos.first { background: #FEF3C7; color: #92400E; }
+.rank-pos.second { background: #E5E7EB; color: #374151; }
+.rank-pos.third { background: #FFEDD5; color: #92400E; }
+
+.badge {
+  font-size: 13px; font-weight: 800; padding: 5px 12px; border-radius: 100px;
+  text-align: center; display: inline-block; font-variant-numeric: tabular-nums;
+}
+.badge.g { background: #D1FAE5; color: #065F46; }
+.badge.a { background: #FEF3C7; color: #92400E; }
+.badge.r { background: #FFE4E6; color: #9F1239; }
+
+/* HISTORY */
+.hist-row {
+  display: grid; grid-template-columns: minmax(0,1fr) 90px 60px 50px 90px;
+
+  gap: 10px; align-items: center; padding: .75rem .875rem;
+  border-bottom: 1px solid var(--border); font-size: 13px; cursor: pointer;
+  transition: all .15s;
+}
+.hist-row:last-child { border-bottom: none; }
+.hist-row:hover { background: var(--surface-2); padding-left: 1.125rem; }
+.hist-row-head { font-size: 10px; color: var(--text-3); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+.ko-top-row { display: flex; justify-content: space-between; align-items: center; padding: .625rem .75rem; border-bottom: 1px solid var(--border); font-size: 13px; }
+.ko-top-row:last-child { border-bottom: none; }
+
+/* CHART */
+.chart-wrap { position: relative; height: 200px; margin-top: .75rem; }
+
+/* NOTION STATUS */
+.notion-status {
+  padding: .875rem 1rem; border-radius: var(--radius); font-size: 13px;
+  margin-top: 1rem; display: none; font-weight: 500;
+  animation: slideIn .3s ease;
+}
+@keyframes slideIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.notion-status.ok { background: var(--emerald-bg); color: #047857; border: 1.5px solid #86EFAC; }
+.notion-status.err { background: var(--rose-bg); color: #BE123C; border: 1.5px solid #FCA5A5; }
+.notion-status.loading { background: var(--brand-bg); color: var(--brand); border: 1.5px solid #C7D2FE; }
+
+/* MODAL */
+.modal-overlay { position: fixed; inset: 0; background: rgba(31, 27, 61, 0.5); backdrop-filter: blur(4px); z-index: 200; display: none; align-items: center; justify-content: center; }
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--surface); border-radius: var(--radius-lg); padding: 1.5rem;
+  max-width: 500px; width: 92%; max-height: 84vh; overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2); animation: slideIn .25s ease;
+}
+.modal h3 { font-size: 16px; margin-bottom: 1rem; font-family: 'Plus Jakarta Sans', sans-serif; }
+.modal-close { float: right; cursor: pointer; color: var(--text-3); font-size: 22px; line-height: 1; padding: 0 4px; }
+.modal-close:hover { color: var(--text); }
+
+/* SETTINGS */
+.store-list { list-style: none; }
+.store-item { display: flex; align-items: center; justify-content: space-between; padding: .625rem .5rem; border-bottom: 1px solid var(--border); font-size: 13px; }
+.store-item:last-child { border-bottom: none; }
+.store-item:hover { background: var(--surface-2); }
+.store-del { background: none; border: none; color: var(--rose); cursor: pointer; font-size: 18px; padding: 4px 8px; border-radius: 6px; }
+.store-del:hover { background: var(--rose-bg); }
+
+/* EMPTY STATE */
+.empty {
+  text-align: center; padding: 2.5rem 1rem; color: var(--text-3);
+}
+.empty-icon { font-size: 36px; margin-bottom: 8px; opacity: 0.5; }
+.empty-msg { font-size: 13px; }
+
+/* RESPONSIVE */
+@media (max-width: 540px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .form-grid.three { grid-template-columns: 1fr 1fr; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .theme-scores-grid { grid-template-columns: 1fr; }
+  .nav-tab { padding: 16px 11px; font-size: 13px; }
+  .hero { padding: 1.5rem 1.1rem; margin: 1rem .75rem 1.25rem; }
+  .hero-title { font-size: 21px; }
+  .hero-sub { font-size: 14px; }
+  .section { padding: 0 .75rem 3rem; }
+  .ko-action-row { grid-template-columns: 1fr; }
+  .rank-hdr, .store-rank-row { grid-template-columns: minmax(0,1fr) 65px 50px 80px; gap: 8px; font-size: 14px; }
+  .hist-row { grid-template-columns: minmax(0,1fr) 75px 55px 42px 78px; gap: 6px; font-size: 13px; }
+  .dash-kpi-val { font-size: 30px; }
+  .ts-item-lbl { min-width: 110px; font-size: 13px; }
+  .card { padding: 1.1rem; }
+  .ts-item { padding: 7px 9px; }
+  .btn { padding: 12px 16px; font-size: 14px; }
+  .kpi-box { padding: 1rem .9rem .8rem; }
+  .kpi-row input { font-size: 14px; padding: 7px 8px; }
+  .crit-lbl { font-size: 14px; }
+  .sbtn { padding: 9px 13px; font-size: 13px; }
+  .theme-title { font-size: 15px; }
+  .fgroup input, .fgroup select, .fgroup textarea { font-size: 16px; padding: 12px 13px; }
+}
+
+/* PRINT */
+@media print {
+  .topbar, .btn-row, .nav-tab, .hero { display: none; }
+  .section { display: block !important; }
+  body { background: #fff; }
+  .app { padding-bottom: 0; }
+}
+
+/* MAIL */
+.mail-preview {
+  background: var(--surface); border: 1.5px solid var(--border-2);
+  border-radius: var(--radius); overflow: hidden; margin-top: .75rem;
+}
+.mail-header {
+  background: linear-gradient(135deg, #1F1B3D 0%, #374151 100%);
+  padding: .875rem 1.25rem; display: flex; align-items: center; gap: 10px;
+}
+.mail-dots { display: flex; gap: 5px; }
+.mail-dot { width: 11px; height: 11px; border-radius: 50%; }
+.mail-body { padding: 1rem 1.25rem; }
+.mail-field { display: flex; align-items: flex-start; gap: 10px; padding: .5rem 0; border-bottom: 1px solid var(--border); }
+.mail-field:last-of-type { border-bottom: none; }
+.mail-field-lbl { font-size: 11px; font-weight: 700; color: var(--text-3); min-width: 60px; padding-top: 2px; text-transform: uppercase; letter-spacing: .04em; }
+.mail-field-val { font-size: 13px; color: var(--text); flex: 1; line-height: 1.55; }
+.mail-field-val.editable {
+  border: none; outline: none; width: 100%; background: transparent;
+  font-family: inherit; font-size: 13px; color: var(--text); resize: vertical; min-height: 40px;
+}
+.mail-field-val.editable:focus { color: var(--brand); }
+.mail-subject-input {
+  border: none; outline: none; width: 100%; background: transparent;
+  font-family: inherit; font-size: 13px; font-weight: 600; color: var(--text);
+}
+.mail-copy-bar {
+  background: var(--surface-2); border-top: 1px solid var(--border);
+  padding: .625rem 1rem; display: flex; justify-content: space-between; align-items: center;
+  font-size: 11px; color: var(--text-3);
+}
+
+/* PLAN D'ACTIONS TABLE */
+.action-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.action-table thead tr { background: linear-gradient(135deg, var(--brand) 0%, #7C3AED 100%); }
+.action-table th { padding: 9px 12px; text-align: left; font-size: 11px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: .05em; }
+.action-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.action-table tr:last-child td { border-bottom: none; }
+.action-table tr:hover td { background: var(--surface-2); }
+.action-table input, .action-table select {
+  border: 1px solid var(--border-2); border-radius: 6px; padding: 5px 8px;
+  font-size: 12px; background: var(--surface); color: var(--text);
+  font-family: inherit; width: 100%;
+}
+.action-table input:focus, .action-table select:focus { outline: none; border-color: var(--brand); }
+.action-status { padding: 3px 9px; border-radius: 8px; font-size: 11px; font-weight: 700; }
+.status-open { background: var(--rose-bg); color: var(--rose); }
+.status-progress { background: var(--amber-bg); color: var(--amber); }
+.status-done { background: var(--emerald-bg); color: var(--emerald); }
+.action-ko-lbl { font-size: 12px; font-weight: 600; color: var(--rose); display: flex; align-items: center; gap: 5px; }
+
+/* TOP / BOTTOM */
+.top-bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.top-section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: .75rem; display: flex; align-items: center; gap: 7px; }
+.rank-mini-row { display: flex; align-items: center; gap: 10px; padding: .5rem .625rem; border-radius: 10px; margin-bottom: 5px; transition: background .15s; }
+.rank-mini-row:hover { background: var(--surface-2); }
+.rank-mini-pos { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+.rank-mini-name { flex: 1; font-size: 12px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rank-mini-score { font-size: 12px; font-weight: 700; }
+
+/* CARTE GEO SVG */
+.geo-card { position: relative; }
+.geo-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: .75rem; font-size: 11px; font-weight: 600; }
+.geo-legend-item { display: flex; align-items: center; gap: 5px; }
+.geo-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.geo-map-wrap { background: var(--surface-2); border-radius: var(--radius); padding: 1rem; margin-top: .75rem; min-height: 200px; position: relative; }
+.geo-store-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
+.geo-store-item { display: flex; align-items: center; gap: 8px; padding: .5rem .75rem; border-radius: 10px; border: 1.5px solid; font-size: 12px; }
+.geo-store-item.good { background: var(--emerald-bg); border-color: #86EFAC; }
+.geo-store-item.warn { background: var(--amber-bg); border-color: #FCD34D; }
+.geo-store-item.crit { background: var(--rose-bg); border-color: #FCA5A5; }
+.geo-store-name { flex: 1; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.geo-store-score { font-weight: 700; font-size: 13px; }
+
+/* INSTALL BANNER */
+.install-banner {
+  background: linear-gradient(135deg, var(--brand) 0%, #7C3AED 100%);
+  color: #fff; border-radius: var(--radius); padding: .875rem 1.25rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin: 1.25rem 1rem .5rem; box-shadow: var(--shadow-lg);
+  animation: slideIn .4s ease;
+}
+.install-banner-text { font-size: 13px; font-weight: 500; }
+.install-banner-text strong { display: block; font-size: 14px; margin-bottom: 2px; }
+.install-banner-btns { display: flex; gap: 8px; flex-shrink: 0; }
+.btn-install { background: #fff; color: var(--brand); border: none; padding: 7px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; }
+.btn-install-dismiss { background: rgba(255,255,255,.2); color: #fff; border: 1px solid rgba(255,255,255,.4); padding: 7px 12px; border-radius: 8px; font-size: 12px; cursor: pointer; }
+
+
+/* ── BROUILLONS ── */
+.btn-draft { background: linear-gradient(135deg,#F59E0B,#D97706); color:#fff; border-color:transparent; font-size:14px; padding:11px 18px; }
+.btn-draft:hover { box-shadow:0 6px 20px rgba(245,158,11,0.55); transform:translateY(-2px); }
+
+.draft-fab {
+  position:fixed; bottom:24px; right:20px; z-index:998;
+  background:linear-gradient(135deg,#F59E0B,#D97706);
+  color:#fff; border:none; border-radius:50px; padding:12px 18px;
+  font-size:13px; font-weight:700; cursor:pointer;
+  box-shadow:0 6px 24px rgba(245,158,11,0.5);
+  display:none; align-items:center; gap:8px; transition:transform .15s;
+}
+.draft-fab:hover { transform:scale(1.04); }
+.draft-fab.visible { display:flex; }
+.draft-fab-badge { background:rgba(0,0,0,0.25); border-radius:20px; padding:2px 8px; font-size:11px; font-weight:800; }
+
+.draft-modal-overlay {
+  display:none; position:fixed; inset:0; z-index:1100;
+  background:rgba(0,0,0,0.6); backdrop-filter:blur(4px);
+  align-items:flex-end; justify-content:center;
+}
+.draft-modal-overlay.open { display:flex; }
+.draft-modal {
+  background:var(--surface,#1A1B28); border-radius:20px 20px 0 0;
+  width:100%; max-width:540px; max-height:85vh;
+  overflow-y:auto; padding:24px 20px 32px;
+  box-shadow:0 -8px 40px rgba(0,0,0,0.5);
+  animation:slideUpModal .25s ease;
+}
+@keyframes slideUpModal { from{transform:translateY(40px);opacity:0} to{transform:translateY(0);opacity:1} }
+.draft-modal-hd {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:16px; padding-bottom:12px;
+  border-bottom:1px solid var(--border,#252636);
+}
+.draft-modal-title { font-size:16px; font-weight:700; color:var(--text,#E4E4F0); }
+.draft-modal-close { background:var(--surface-2,#252636); border:none; color:var(--text-2,#9292A8); border-radius:8px; padding:6px 12px; cursor:pointer; font-size:13px; }
+.draft-card { background:var(--elevated,#1A1B28); border:1.5px solid var(--border,#252636); border-radius:12px; padding:14px 16px; margin-bottom:10px; }
+.draft-card-hd { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+.draft-card-store { font-size:14px; font-weight:700; color:var(--text,#E4E4F0); }
+.draft-card-time { font-size:11px; color:var(--text-2,#9292A8); }
+.draft-card-meta { font-size:12px; color:var(--text-2,#9292A8); margin-bottom:10px; }
+.draft-card-progress { display:flex; gap:10px; margin-bottom:12px; flex-wrap:wrap; }
+.draft-tag { font-size:11px; font-weight:600; padding:3px 9px; border-radius:20px; background:var(--brand-bg,rgba(91,95,237,0.12)); color:var(--brand,#5B5FED); }
+.draft-tag.ko { background:rgba(239,68,68,0.12); color:#EF4444; }
+.draft-tag.ok { background:rgba(16,185,129,0.12); color:#10B981; }
+.draft-card-actions { display:flex; gap:8px; }
+.draft-resume-btn { flex:1; background:linear-gradient(135deg,#5B5FED,#7C3AED); color:#fff; border:none; border-radius:8px; padding:9px 0; font-size:13px; font-weight:700; cursor:pointer; }
+.draft-resume-btn:hover { opacity:.9; }
+.draft-del-btn { background:rgba(239,68,68,0.1); border:1.5px solid rgba(239,68,68,0.3); color:#EF4444; border-radius:8px; padding:9px 14px; font-size:13px; cursor:pointer; }
+.draft-export-btn { background:rgba(91,95,237,0.1); border:1.5px solid rgba(91,95,237,0.3); color:var(--brand,#5B5FED); border-radius:8px; padding:9px 14px; font-size:13px; cursor:pointer; }
+.draft-export-btn:hover { background:rgba(91,95,237,0.2); }
+.draft-del-btn:hover { background:rgba(239,68,68,0.2); }
+
+/* Bouton suppression plan d'action */
+.ko-del-btn {
+  background:rgba(239,68,68,0.1); border:1.5px solid rgba(239,68,68,0.25);
+  color:#EF4444; border-radius:6px; padding:4px 10px;
+  font-size:11px; cursor:pointer; font-weight:600;
+  float:right; margin-top:-2px;
+}
+.ko-del-btn:hover { background:rgba(239,68,68,0.2); }
+
+</style>
+</head>
+<body>
+
+<!-- DRAFT FAB -->
+<button class="draft-fab" id="draft-fab" onclick="openDraftModal()">
+  💾 Brouillons <span class="draft-fab-badge" id="draft-fab-count">0</span>
+</button>
+<!-- DRAFT MODAL -->
+<div class="draft-modal-overlay" id="draft-overlay" onclick="closeDraftModal(event)">
+  <div class="draft-modal" onclick="event.stopPropagation()">
+    <div class="draft-modal-hd">
+      <div class="draft-modal-title">💾 Fiches en cours</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <label style="background:rgba(91,95,237,0.12);border:1.5px solid rgba(91,95,237,0.3);color:var(--brand,#5B5FED);border-radius:8px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer" title="Importer un brouillon (iPhone→Mac)">
+          📥 Importer
+          <input type="file" accept=".json" style="display:none" onchange="importDraftFile(this)">
+        </label>
+        <button class="draft-modal-close" onclick="closeDraftModal()">✕ Fermer</button>
+      </div>
+    </div>
+    <div id="draft-list"></div>
+  </div>
+</div>
+
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="top-logo">RetailOps 360</div>
+    <div class="nav-tab active" onclick="nav('visite')">Visite</div>
+    <div class="nav-tab" onclick="nav('dashboard')">Dashboard</div>
+    <div class="nav-tab" onclick="nav('historique')">Historique</div>
+    <div class="nav-tab" onclick="nav('mail')">✉ Mail</div>
+    <div class="nav-tab" onclick="nav('config')">Réglages</div>
+  </div>
+</div>
+
+<!-- Install Banner PWA -->
+<div class="install-banner" id="install-banner" style="display:none">
+  <div class="install-banner-text">
+    <strong>📲 Installer RetailOps 360</strong>
+    Accédez à l'app depuis votre bureau, tablette ou téléphone comme une vraie application.
+  </div>
+  <div class="install-banner-btns">
+    <button class="btn-install" id="btn-install-pwa">Installer</button>
+    <button class="btn-install-dismiss" onclick="dismissInstall()">Plus tard</button>
+  </div>
+</div>
+
+<div class="app">
+
+<!-- ═══════════════════════════════════════════════════════ VISITE -->
+<div id="s-visite" class="section active">
+
+  <div class="hero">
+    <div class="hero-title">Nouvelle visite magasin</div>
+    <div class="hero-sub">RetailOps 360 — Saisissez les KPIs avant d'entrer en magasin, puis remplissez la checklist sur le terrain.</div>
+  </div>
+
+  <!-- Infos visite -->
+  <div class="card">
+    <div class="card-head"><span class="card-head-icon">🏪</span>Informations visite</div>
+    <div class="form-grid">
+      <div class="fgroup">
+        <label>Magasin</label>
+        <select id="v-magasin" onchange="syncMagasinInput()">
+          <option value="">— Sélectionner —</option>
+        </select>
+      </div>
+      <div class="fgroup">
+        <label>Nom libre (ou nouveau magasin)</label>
+        <input type="text" id="v-magasin-libre" placeholder="Saisir si absent de la liste">
+      </div>
+      <div class="fgroup">
+        <label>Type de visite</label>
+        <select id="v-type">
+          <option>Visite opérationnelle</option>
+          <option>Audit qualité</option>
+          <option>Visite direction</option>
+          <option>Visite flash</option>
+          <option>Visite surprise</option>
+        </select>
+      </div>
+      <div class="fgroup">
+        <label>Visiteur</label>
+        <input type="text" id="v-visiteur" placeholder="Votre nom">
+      </div>
+      <div class="fgroup">
+        <label>Date</label>
+        <input type="date" id="v-date">
+      </div>
+      <div class="fgroup">
+        <label>Heure</label>
+        <input type="time" id="v-heure">
+      </div>
+    </div>
+    <div class="fgroup" style="margin-top:.875rem">
+      <label>Contexte & opérations en cours</label>
+      <textarea id="v-contexte" placeholder="Ex: OP -20% surgelés, semaine fruits, drive en relance, challenge CA…"></textarea>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="card">
+    <div class="card-head"><span class="card-head-icon" style="background:var(--coral-bg);color:var(--coral)">📈</span>KPIs magasin — Données S-1 / J-1</div>
+    <div style="font-size:12px;color:var(--text-2);margin-bottom:1rem;line-height:1.5">À renseigner <strong>avant</strong> la visite pour un audit ciblé. Valeur S-1 + valeur de référence S-2 → évolution calculée automatiquement.</div>
+    <div class="kpi-grid" id="kpi-grid"></div>
+    <div style="margin-top:1rem">
+      <div class="fgroup">
+        <label>Commentaire KPIs / analyse pré-visite</label>
+        <textarea id="v-kpi-comment" placeholder="Tendances identifiées, points d'attention avant d'entrer en magasin…"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checklist -->
+  <div id="checklist-wrap"></div>
+
+  <!-- KO Actions -->
+  <div class="card">
+    <div class="card-head"><span class="card-head-icon" style="background:var(--rose-bg);color:var(--rose)">⚠️</span>Plan d'actions correctives</div>
+    <div id="ko-actions-wrap">
+      <div class="empty"><div class="empty-icon">✓</div><div class="empty-msg">Les points KO apparaîtront ici automatiquement</div></div>
+    </div>
+  </div>
+
+  <!-- Score global -->
+  <div class="card">
+    <div class="card-head"><span class="card-head-icon" style="background:var(--emerald-bg);color:var(--emerald)">🏆</span>Score global de la visite</div>
+    <div id="score-wrap">
+      <div class="empty"><div class="empty-icon">📊</div><div class="empty-msg">Remplissez la checklist pour voir votre score</div></div>
+    </div>
+  </div>
+
+  <!-- Conclusion Claude -->
+  <div class="card">
+    <div class="card-head"><span class="card-head-icon" style="background:linear-gradient(135deg,#C96442,#A855F7);color:#fff">✦</span>Conclusion & analyse — Claude IA</div>
+    <div style="font-size:12px;color:var(--text-2);margin-bottom:.875rem;line-height:1.5">Claude analyse toutes les données de la visite et rédige une conclusion professionnelle prête à envoyer.</div>
+    <div class="claude-box" id="claude-box" style="display:none">
+      <div class="claude-box-head">✦ Conclusion générée par Claude</div>
+      <div id="claude-output" class="claude-output"></div>
+      <textarea id="claude-edit" class="claude-edit" style="display:none" placeholder="Modifiez la conclusion ici…"></textarea>
+      <div style="display:flex;gap:8px;margin-top:.75rem;flex-wrap:wrap">
+        <button class="btn btn-secondary" onclick="toggleEditConclusion()" id="btn-edit-concl">✏️ Modifier</button>
+        <button class="btn btn-secondary" onclick="copyConclusion()">📋 Copier</button>
+      </div>
+    </div>
+    <div class="btn-row" style="margin-top:.875rem">
+      <button class="btn btn-claude" onclick="generateConclusion()">✦ Générer conclusion Claude</button>
+    </div>
+  </div>
+
+  <!-- Actions finales -->
+  <div class="btn-row">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-draft" onclick="saveDraft()">💾 Brouillon</button>
+      <span id="autosave-status" style="font-size:11px;color:var(--brand);opacity:0;transition:opacity .5s;font-weight:600"></span>
+    </div>
+    <button class="btn btn-secondary" onclick="resetForm()">↺ Réinitialiser</button>
+    <button class="btn btn-secondary" onclick="nav('mail');generateMail()">✉ Préparer mail</button>
+    <button class="btn btn-notion" onclick="exportNotion()">📓 Notion</button>
+    <button class="btn btn-green" onclick="validateSave()">✓ Valider la visite</button>
+    <button class="btn btn-primary" onclick="buildAndPrint()">⬇ PDF</button>
+  </div>
+
+  <div id="notion-status" class="notion-status"></div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ DASHBOARD -->
+<div id="s-dashboard" class="section">
+
+  <div class="hero" style="background:linear-gradient(135deg,#06B6D4 0%,#5B5FED 50%,#A855F7 100%)">
+    <div class="hero-title">Dashboard multisite</div>
+    <div class="hero-sub">RetailOps 360 — Vue consolidée de toutes vos visites et de la performance par magasin.</div>
+  </div>
+
+  <div class="dash-grid" id="dash-kpis"></div>
+
+  <!-- Top 10 / Bottom 10 -->
+  <div class="card">
+    <div class="card-head"><span class="card-head-icon" style="background:var(--lemon-bg);color:#B45309">🏅</span>Top 10 & Bottom 10 magasins</div>
+    <div class="top-bottom-grid" id="top-bottom-grid"></div>
+  </div>
+
+  <!-- Carte géographique -->
+  <div class="card geo-card">
+    <div class="card-head"><span class="card-head-icon" style="background:var(--cyan-bg);color:var(--cyan)">🗺</span>Carte de performance — Région AURA</div>
+    <div class="geo-legend">
+      <span class="geo-legend-item"><span class="geo-dot" style="background:#10B981"></span> &gt;90% Excellent</span>
+      <span class="geo-legend-item"><span class="geo-dot" style="background:#F59E0B"></span> 80–90% Correct</span>
+      <span class="geo-legend-item"><span class="geo-dot" style="background:#F43F5E"></span> &lt;80% Critique</span>
+    </div>
+    <div class="geo-map-wrap">
+      <div class="geo-store-grid" id="geo-store-grid"></div>
+    </div>
+  </div>
+
+  <!-- Classement complet -->
+  <div class="card">
+    <div class="card-head"><span class="card-head-icon">🏆</span>Classement complet</div>
+    <div class="rank-hdr">
+      <span>Magasin</span>
+      <span>Score</span>
+      <span>KO</span>
+      <span>Dernière visite</span>
+    </div>
+    <div id="dash-ranking"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="card-head-icon" style="background:var(--coral-bg);color:var(--coral)">📊</span>Score par thème — Dernière visite</div>
+    <div id="dash-theme-bars"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="card-head-icon" style="background:var(--rose-bg);color:var(--rose)">🔁</span>Top 5 non-conformités récurrentes</div>
+    <div id="dash-top-ko"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="card-head-icon" style="background:var(--cyan-bg);color:var(--cyan)">📈</span>Évolution des scores</div>
+    <div class="chart-wrap"><canvas id="chart-evolution"></canvas></div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ MAIL -->
+<div id="s-mail" class="section">
+
+  <div class="hero" style="background:linear-gradient(135deg,#5B5FED 0%,#06B6D4 50%,#10B981 100%)">
+    <div class="hero-title">✉ Mail automatique</div>
+    <div class="hero-sub">Compte rendu généré automatiquement depuis les données de la dernière visite validée.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="card-head-icon">✉</span>Destinataires & paramètres</div>
+    <div class="form-grid">
+      <div class="fgroup">
+        <label>À (destinataire principal)</label>
+        <input type="email" id="mail-to" placeholder="directeur@magasin.fr">
+      </div>
+      <div class="fgroup">
+        <label>CC (copie)</label>
+        <input type="email" id="mail-cc" placeholder="adjoint@magasin.fr, rh@enseigne.fr">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="card-head-icon" style="background:var(--coral-bg);color:var(--coral)">📧</span>Aperçu du mail</div>
+    <div class="mail-preview">
+      <div class="mail-header">
+        <div class="mail-dots">
+          <div class="mail-dot" style="background:#FF5F57"></div>
+          <div class="mail-dot" style="background:#FFBD2E"></div>
+          <div class="mail-dot" style="background:#28C840"></div>
+        </div>
+        <span style="color:rgba(255,255,255,0.6);font-size:12px;margin-left:8px;font-weight:500">RetailOps 360 — Compte rendu de visite</span>
+      </div>
+      <div class="mail-body">
+        <div class="mail-field">
+          <span class="mail-field-lbl">Objet</span>
+          <input type="text" id="mail-subject" class="mail-subject-input" placeholder="Compte-rendu visite Magasin XXX — 08/06/2026">
+        </div>
+        <div class="mail-field" style="flex-direction:column;align-items:stretch;gap:0">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span class="mail-field-lbl" style="margin-bottom:0">Corps</span>
+            <div style="display:flex;gap:6px">
+              <button onclick="toggleMailView()" id="mail-view-toggle" style="font-size:11px;padding:3px 10px;border-radius:6px;border:1px solid var(--border);background:var(--surface-2);color:var(--text-2);cursor:pointer">Texte brut</button>
+            </div>
+          </div>
+          <div id="mail-body-preview" style="font-family:'Inter','Segoe UI',Arial,sans-serif;font-size:13.5px;line-height:1.7;color:#1a1a2e;background:#fff;border-radius:10px;padding:20px 24px;min-height:200px;border:1px solid #e5e7eb;overflow:auto;max-height:520px"></div>
+          <textarea id="mail-body-text" class="mail-field-val editable" rows="18" style="display:none;margin-top:8px" placeholder="Le corps du mail sera généré automatiquement après validation d'une visite…"></textarea>
+        </div>
+      </div>
+      <div class="mail-copy-bar">
+        <span id="mail-visit-info">—</span>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-secondary" style="padding:5px 12px;font-size:12px" onclick="regenerateMail()">↺ Régénérer</button>
+          <button class="btn btn-primary" style="padding:5px 14px;font-size:12px" onclick="copyMailFull()">📋 Copier le mail</button>
+          <button class="btn btn-green" style="padding:5px 14px;font-size:12px" onclick="openMailClient()">✉ Ouvrir dans Mail</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Plan d'actions intégré -->
+  <div class="card">
+    <div class="card-head"><span class="card-head-icon" style="background:var(--rose-bg);color:var(--rose)">📋</span>Plan d'actions — Non-conformités</div>
+    <div style="font-size:12px;color:var(--text-2);margin-bottom:.875rem">Chaque KO génère automatiquement une ligne d'action. Complétez responsable, échéance et statut.</div>
+    <div style="overflow-x:auto">
+      <table class="action-table" id="action-plan-table">
+        <thead>
+          <tr>
+            <th style="min-width:200px">Non-conformité</th>
+            <th style="min-width:160px">Action à mener</th>
+            <th style="min-width:120px">Responsable</th>
+            <th style="min-width:120px">Échéance</th>
+            <th style="min-width:110px">Statut</th>
+          </tr>
+        </thead>
+        <tbody id="action-plan-body">
+          <tr><td colspan="5" style="text-align:center;color:var(--text-3);padding:1.5rem;font-size:13px">Validez une visite pour voir le plan d'actions auto-généré</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="addManualAction()">+ Ajouter une action manuelle</button>
+      <button class="btn btn-primary" onclick="injectActionsIntoMail()">↑ Injecter dans le mail</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ HISTORIQUE -->
+<div id="s-historique" class="section">
+
+  <div class="hero" style="background:linear-gradient(135deg,#F97316 0%,#EC4899 50%,#A855F7 100%)">
+    <div class="hero-title">Historique des visites</div>
+    <div class="hero-sub">Toutes vos visites, cliquables pour voir le détail.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="card-head-icon">📋</span>Toutes les visites</div>
+    <div class="rank-hdr" style="grid-template-columns:minmax(0,1fr) 90px 60px 50px 90px">
+      <span>Magasin</span>
+      <span>Type</span>
+      <span>Score</span>
+      <span>KO</span>
+      <span>Date</span>
+    </div>
+    <div id="hist-list"></div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ CONFIG -->
+<div id="s-config" class="section">
+
+  <div class="hero" style="background:linear-gradient(135deg,#10B981 0%,#06B6D4 50%,#5B5FED 100%)">
+    <div class="hero-title">Réglages — RetailOps 360</div>
+    <div class="hero-sub">API, magasins, sauvegarde et paramètres de l'application.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="card-head-icon">🔑</span>Connexions API</div>
+    <div class="fgroup" style="margin-bottom:1rem">
+      <label>Clé API Anthropic (pour Claude IA)</label>
+      <input type="password" id="cfg-claude-key" placeholder="sk-ant-…" oninput="saveCfg()">
+      <div style="font-size:11px;color:var(--text-3);margin-top:5px">Stockée localement dans votre navigateur. Jamais transmise ailleurs.</div>
+    </div>
+    <div class="fgroup" style="margin-bottom:1rem">
+      <label>Token Notion (pour export)</label>
+      <input type="password" id="cfg-notion-token" placeholder="ntn_… ou secret_…" oninput="saveCfg()">
+    </div>
+    <div class="fgroup">
+      <label>Page Notion parent ID</label>
+      <input type="text" id="cfg-notion-parent" placeholder="3621b87b-4266-8120-ace9-d44e3869f231" oninput="saveCfg()">
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="card-head-icon" style="background:var(--coral-bg);color:var(--coral)">🏪</span>Gestion des magasins</div>
+    <div class="form-grid" style="margin-bottom:.875rem">
+      <div class="fgroup">
+        <label>Ajouter un magasin</label>
+        <input type="text" id="new-store-name" placeholder="Nom du magasin">
+      </div>
+      <div class="fgroup">
+        <label>Ville</label>
+        <input type="text" id="new-store-city" placeholder="Ville">
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="addStore()" style="margin-bottom:1rem">+ Ajouter</button>
+    <ul class="store-list" id="store-list"></ul>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="card-head-icon" style="background:var(--emerald-bg);color:var(--emerald)">💾</span>Données & sauvegarde</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-secondary" onclick="exportData()">⬇ Exporter données JSON</button>
+      <button class="btn btn-secondary" onclick="importData()">⬆ Importer données JSON</button>
+      <button class="btn btn-secondary" style="color:var(--rose);border-color:var(--rose)" onclick="clearAll()">🗑 Effacer tout</button>
+    </div>
+  </div>
+
+</div>
+
+</div>
+
+<!-- Modal détail visite -->
+<div class="modal-overlay" id="modal-visit">
+  <div class="modal">
+    <span class="modal-close" onclick="closeModal('modal-visit')">×</span>
+    <h3 id="modal-visit-title">Détail visite</h3>
+    <div id="modal-visit-body"></div>
+    <div class="btn-row" style="margin-top:1.25rem">
+      <button class="btn btn-primary" onclick="printVisit()">⬇ Générer PDF</button>
+    </div>
+  </div>
+</div>
+
+<div id="pdf-content" style="display:none"></div>
+
+<script>
+// ═══════════════════════════════════════ DATA
+
+const STORES_DEFAULT = [
+  'Carrefour Market Lyon 1','Carrefour Market Lyon 3','Carrefour Market Lyon 7',
+  'Carrefour Market Villeurbanne','Carrefour Market Vénissieux','Carrefour Market Mions',
+  'Franprix Saint-Priest','Franprix Bron','Franprix Décines',
+  'Franprix Vaulx-en-Velin','Franprix Meyzieu','Franprix Caluire',
+  'Franprix Saint-Genis-Laval','Franprix Givors','Franprix Oullins',
+  'Franprix Tassin','Franprix Écully','Franprix Rillieux',
+  'Franprix Chassieu','Franprix Genas'
+];
+
+const KPI_CONFIG = [
+  { id:'ca',    label:'CA S-1 (€)',              isDC:false },
+  { id:'caj',   label:'CA J-1 (€)',              isDC:false },
+  { id:'dc',    label:'Démarque connue S-1 (€)', isDC:true  },
+  { id:'dcpct', label:'Taux DC S-1 (%)',            isDC:true  },
+  { id:'clients',label:'Nb clients S-1',            isDC:false },
+  { id:'pm',    label:'Panier moyen S-1 (€)',    isDC:false },
+  { id:'uvc',   label:'Nb UVC vendues S-1',      isDC:false },
+  { id:'nps',   label:'Note Google / NPS',       isDC:false },
+  { id:'fid',   label:'Encartage fidélité (%)',  isDC:false },
+  { id:'eco',   label:'CA E-commerce (€)',       isDC:false },
+  { id:'sat',   label:'Satisfaction e-com (%)',  isDC:false },
+];
+
+const CHECKLIST = {
+  tc: {
+    label:'Tenue commerciale', icon:'🛒',
+    rayons: {
+      frais:    { label:'🧊 Frais', items:['Facing et remplissage rayon frais','Respect du planogramme frais','Températures conformes (0-4°C)','DLC/DDM : aucun produit périmé','Rotation FIFO appliquée','Surstock absent ou géré','Étiquetage prix complet et lisible','Propreté meubles et bacs'] },
+      surgele:  { label:'❄️ Surgelés', items:['Facing et remplissage surgelés','Respect planogramme surgelés','Températures conformes (-18°C)','Pas de produits hors ligne de gel','DLC/DDM surgelés conformes','Portes bacs fermées','Étiquetage prix complet','Propreté meubles surgelés'] },
+      fl:       { label:'🥦 F&L', items:['Facing et remplissage F&L','Fraîcheur et qualité visuelle','Absence de produits abîmés','Étiquetage origine et prix','Propreté bacs et sol rayon','Mise en avant saisonnière','Brumisation et conservation'] },
+      epicerie: { label:'🛒 Épicerie', items:['Facing et remplissage épicerie','Respect planogramme épicerie','DLC/DDM épicerie conformes','Surstock géré ou absent','Étiquetage prix complet','Propreté rayon épicerie','Ruptures identifiées et traitées'] },
+      pmp:      { label:'🥩 PMP/Marée', items:['Facing et remplissage PMP/Marée','Traçabilité et étiquetage origine','Températures conserves/frais','Fraîcheur produits marée','Propreté banque et vitrine','Tenue du personnel boucher/poissonnier'] },
+    }
+  },
+  gestion:   { label:'Gestion / Process', icon:'📊', items:['Budget de commande respecté','DC traitées dans les délais','DI traitées dans les délais','Réception marchandise conforme','Gestion retours/avoirs à jour','Traçabilité produits assurée','Surstock identifié et plan d\'action','Inventaires tournants réalisés','Processus commande automatique OK'] },
+  proprete:  { label:'Propreté générale', icon:'✨', items:['Propreté sols surface de vente','Propreté réserve et stockage','Propreté chambres froides','Propreté caisses et accueil','Propreté façade et extérieur','Poubelles et déchets gérés','WC clients propres'] },
+  rh:        { label:'Ressources humaines', icon:'👥', items:['Tenue du personnel conforme','Badge et identification portés','Respect normes sécurité (EPI)','Présence et ponctualité','Affichage obligatoire à jour','Habilitations et formations à jour','Respect procédures caisse','Ambiance et esprit d\'équipe'] },
+  client:    { label:'Accueil client & fidélité', icon:'❤️', items:['Qualité accueil caisse','Signalétique promotionnelle en place','Carte fidélité : animation visible','Taux encartage suivi et partagé','Note Google / NPS affiché et suivi','Gestion files d\'attente','Réponse aux avis clients','Accueil click & collect'] },
+  politique: { label:'Politique commerciale', icon:'🏷️', items:['Promotions en place et conformes','ILV/PLV respectée','Prix barrés et remises conformes','Mise en avant OP en cours visible','Têtes de gondole conformes plan','Taux détention produits prio > 95%','Respect du catalogue enseigne','Présence des nouveautés référencées','Affichage prix promo conforme loi'] },
+  hygiene:   { label:'Hygiène & sécurité', icon:'🛡️', items:['Chaîne du froid respectée','Procédures nettoyage/désinfection','Registre traçabilité à jour','Lutte antiparasitaire à jour','Produits entretien stockés séparément','Tenue hygiène manipulateurs','Gestion huiles de friture','Contrôle températures enregistré'] },
+};
+
+const THEME_ORDER = ['tc','gestion','proprete','rh','client','politique','hygiene'];
+const KPI_ICONS = { ca:'💰', caj:'📅', dc:'📉', dcpct:'📊', clients:'👥', pm:'🛍', uvc:'📦', nps:'⭐', fid:'💳', eco:'🌐', sat:'😊' };
+
+// App state
+let scores = {};
+let comments = {};
+let photos = {};
+let koActions = {};
+let dismissedKOs = {};  // KOs retirés du plan d'action
+let currentVisit = {};
+let savedVisits = [];
+let stores = [];
+let cfg = { claudeKey:'', notionToken:'', notionParent:'3621b87b-4266-8120-ace9-d44e3869f231' };
+let evolutionChart = null;
+
+// ═══════════════════════════════════════ INIT
+
+function init() {
+  initDrafts();
+  savedVisits = JSON.parse(localStorage.getItem('ra_visits') || '[]');
+  stores = JSON.parse(localStorage.getItem('ra_stores') || 'null') || [...STORES_DEFAULT];
+  const savedCfg = JSON.parse(localStorage.getItem('ra_cfg') || '{}');
+  cfg = { ...cfg, ...savedCfg };
+  buildKPIGrid();
+  buildChecklist();
+  populateStoreSelect();
+  renderStoreList();
+  loadCfgUI();
+  const today = new Date();
+  document.getElementById('v-date').value = today.toISOString().slice(0,10);
+  const hh = String(today.getHours()).padStart(2,'0');
+  const mm = String(today.getMinutes()).padStart(2,'0');
+  document.getElementById('v-heure').value = `${hh}:${mm}`;
+}
+
+// ═══════════════════════════════════════ KPI
+
+function buildKPIGrid() {
+  const grid = document.getElementById('kpi-grid');
+  grid.innerHTML = '';
+  KPI_CONFIG.forEach(k => {
+    grid.innerHTML += `
+      <div class="kpi-box">
+        <div class="kpi-lbl">${KPI_ICONS[k.id]||'📊'} ${k.label}</div>
+        <div class="kpi-row">
+          <input type="number" id="kpi-${k.id}-v1" placeholder="S-1" oninput="calcKpiEvol('${k.id}',${k.isDC})">
+          <span class="kpi-sep">vs</span>
+          <input type="number" id="kpi-${k.id}-v2" placeholder="réf" oninput="calcKpiEvol('${k.id}',${k.isDC})">
+        </div>
+        <span id="kpi-${k.id}-evol" class="kpi-evol ev-neu">—</span>
+      </div>`;
+  });
+}
+
+function calcKpiEvol(id, isDC) {
+  const v1 = parseFloat(document.getElementById(`kpi-${id}-v1`).value);
+  const v2 = parseFloat(document.getElementById(`kpi-${id}-v2`).value);
+  const el = document.getElementById(`kpi-${id}-evol`);
+  if (isNaN(v1) || isNaN(v2) || v2 === 0) { el.textContent = '—'; el.className = 'kpi-evol ev-neu'; return; }
+  const pct = ((v1 - v2) / Math.abs(v2) * 100).toFixed(1);
+  const pos = parseFloat(pct) >= 0;
+  const good = isDC ? !pos : pos;
+  el.textContent = (pos ? '↗ +' : '↘ ') + pct + '%';
+  el.className = 'kpi-evol ' + (good ? 'ev-pos' : 'ev-neg');
+}
+
+function getKPIs() {
+  const res = {};
+  KPI_CONFIG.forEach(k => {
+    res[k.id] = {
+      v1: document.getElementById(`kpi-${k.id}-v1`).value,
+      v2: document.getElementById(`kpi-${k.id}-v2`).value,
+      label: k.label,
+      isDC: k.isDC
+    };
+  });
+  return res;
+}
+
+// ═══════════════════════════════════════ CHECKLIST BUILD
+
+function buildChecklist() {
+  const wrap = document.getElementById('checklist-wrap');
+  wrap.innerHTML = '';
+  THEME_ORDER.forEach(tid => {
+    const t = CHECKLIST[tid];
+    const isRayon = !!t.rayons;
+    const el = document.createElement('div');
+    el.className = `theme t-${tid}`;
+    el.id = `theme-${tid}`;
+
+    let bodyHTML = '';
+    if (isRayon) {
+      const rayonIds = Object.keys(t.rayons);
+      const tabs = rayonIds.map((r,i) => `<div class="rtab${i===0?' active':''}" onclick="switchRayon('${tid}','${r}',this)">${t.rayons[r].label}</div>`).join('');
+      const panels = rayonIds.map((r,i) => {
+        const items = t.rayons[r].items.map((lbl,j) => makeCritHTML(`${tid}_${r}_${j}`, lbl)).join('');
+        return `<div id="panel-${tid}-${r}" class="rayon-panel${i===0?'':' hidden'}">${items}</div>`;
+      }).join('');
+      const resumePanel = `
+        <div id="panel-${tid}-resume" class="rayon-panel hidden">
+          <div style="font-size:12px;color:var(--text-2);margin-bottom:.75rem;font-weight:500">Bilan tenue commerciale par rayon</div>
+          <div id="tc-resume-bars"></div>
+          <div class="fgroup" style="margin-top:1rem">
+            <label>Commentaire global tenue commerciale</label>
+            <textarea id="tc-comment-global" placeholder="Points forts / axes d'amélioration globaux…"></textarea>
+          </div>
+        </div>`;
+      bodyHTML = `
+        <div class="rayon-row">
+          ${tabs}
+          <div class="rtab" onclick="switchRayon('${tid}','resume',this)">📋 Résumé</div>
+        </div>
+        ${panels}${resumePanel}`;
+    } else {
+      const items = t.items.map((lbl,j) => makeCritHTML(`${tid}_${j}`, lbl)).join('');
+      bodyHTML = `<div style="padding:.5rem 1.25rem .75rem">${items}</div>`;
+    }
+
+    el.innerHTML = `
+      <div class="theme-hd" onclick="toggleTheme('${tid}',this)">
+        <div class="theme-title"><span class="theme-emoji">${t.icon}</span>${t.label}</div>
+        <div class="theme-right">
+          <span class="theme-badge" id="tbadge-${tid}">—</span>
+          <svg class="theme-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+      <div class="theme-body" id="tbody-${tid}">${bodyHTML}</div>`;
+    wrap.appendChild(el);
+  });
+}
+
+function makeCritHTML(key, label) {
+  return `
+    <div class="crit" id="crit-${key}">
+      <div class="crit-top">
+        <div class="crit-lbl">${label}</div>
+        <div class="sbtn-row">
+          <button class="sbtn" onclick="setScore('${key}','ok',this)">OK</button>
+          <button class="sbtn" onclick="setScore('${key}','ko',this)">KO</button>
+          <button class="sbtn" onclick="setScore('${key}','na',this)">NA</button>
+        </div>
+        <span class="note-btn" onclick="toggleExtra('${key}')">+ note</span>
+      </div>
+      <div class="crit-extra" id="extra-${key}" style="display:none">
+        <textarea placeholder="Commentaire…" oninput="saveComment('${key}',this.value)" rows="2">${comments[key]||''}</textarea>
+        <div class="photo-zone">
+          <div class="photo-drop-area" id="pzone-${key}"
+               onclick="document.getElementById('pinput-${key}').click()"
+               ondragover="event.preventDefault();this.classList.add('drag-over')"
+               ondragleave="this.classList.remove('drag-over')"
+               ondrop="event.preventDefault();handlePhotoDrop('${key}',event)">
+            <div class="photo-drop-label">📷 Cliquer ou déposer des photos ici</div>
+            <div class="photo-drop-sub">Mac : glisser depuis Photos ou Finder · iPhone : bibliothèque ou appareil photo</div>
+          </div>
+          <input type="file" id="pinput-${key}" class="photo-file-input"
+                 accept="image/*" multiple onchange="addPhotos('${key}',this)">
+          <div class="photo-loading" id="pload-${key}">⏳ Traitement en cours…</div>
+          <div class="photo-thumbs" id="thumbs-${key}"></div>
+        </div>
+      </div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════ SCORING
+
+function setScore(key, val, btn) {
+  scores[key] = val;
+  const row = document.getElementById(`crit-${key}`);
+  if (!row) return;
+  row.querySelectorAll('.sbtn').forEach(b => b.className = 'sbtn');
+  btn.className = `sbtn ${val}`;
+  if (val === 'ko') {
+    document.getElementById(`extra-${key}`).style.display = 'block';
+  }
+  updateAllScores();
+  renderKOActions();
+}
+
+function updateAllScores() {
+  THEME_ORDER.forEach(tid => {
+    const keys = getThemeKeys(tid);
+    const {ok, ko, pct} = calcScore(keys);
+    const badge = document.getElementById(`tbadge-${tid}`);
+    if (badge) {
+      badge.textContent = (ok+ko > 0) ? pct+'%' : '—';
+      if (ok+ko > 0) {
+        badge.style.color = '#fff';
+        badge.style.background = scoreColor(pct);
+        badge.style.borderColor = scoreColor(pct);
+      } else {
+        badge.style.color = '';
+        badge.style.background = '';
+        badge.style.borderColor = '';
+      }
+    }
+  });
+  renderGlobalScore();
+  updateTCResume();
+}
+
+function getThemeKeys(tid) {
+  const t = CHECKLIST[tid];
+  if (t.rayons) {
+    return Object.keys(t.rayons).flatMap((r) =>
+      t.rayons[r].items.map((_,i) => `${tid}_${r}_${i}`)
+    );
+  }
+  return t.items.map((_,i) => `${tid}_${i}`);
+}
+
+function calcScore(keys) {
+  let ok = 0, ko = 0, na = 0;
+  keys.forEach(k => { if(scores[k]==='ok') ok++; else if(scores[k]==='ko') ko++; else if(scores[k]==='na') na++; });
+  const total = ok + ko;
+  const pct = total > 0 ? Math.round(ok / total * 100) : 0;
+  return { ok, ko, na, pct, total };
+}
+
+function scoreColor(p) { return p < 70 ? '#F43F5E' : p < 85 ? '#F59E0B' : '#10B981'; }
+function scoreLabel(p) { return p < 70 ? 'Critique' : p < 85 ? 'Correct' : 'Très satisfaisant'; }
+function scoreClass(p) { return p < 70 ? 'critical' : p < 85 ? 'correct' : 'good'; }
+
+function renderGlobalScore() {
+  const allKeys = THEME_ORDER.flatMap(getThemeKeys);
+  const { ok, ko, na, pct, total } = calcScore(allKeys);
+  const wrap = document.getElementById('score-wrap');
+  if (total === 0) {
+    wrap.innerHTML = '<div class="empty"><div class="empty-icon">📊</div><div class="empty-msg">Remplissez la checklist pour voir votre score</div></div>';
+    return;
+  }
+  const cls = scoreClass(pct);
+  const col = scoreColor(pct);
+  const themeRows = THEME_ORDER.map(tid => {
+    const {ok:tok, ko:tko, pct:tp} = calcScore(getThemeKeys(tid));
+    if (tok+tko === 0) return '';
+    return `<div class="ts-item"><span class="ts-item-lbl">${CHECKLIST[tid].icon} ${CHECKLIST[tid].label}</span><div class="ts-bar-outer"><div class="ts-bar" style="width:${tp}%;background:${scoreColor(tp)}"></div></div><span class="ts-pct" style="color:${scoreColor(tp)}">${tp}%</span></div>`;
+  }).join('');
+  wrap.innerHTML = `
+    <div class="score-ring-wrap">
+      <div class="score-ring ${cls}" style="--p:${pct}"><span>${pct}%</span></div>
+      <div class="score-lbl" style="color:${col}">${scoreLabel(pct)}</div>
+      <div class="score-sub"><span class="ok">${ok} OK</span> · <span class="ko">${ko} KO</span> · <span>${na} NA</span></div>
+      <div class="score-legend"><span class="cr">&lt;70% Critique</span><span class="co">70–85% Correct</span><span class="gd">&gt;85% Très satisfaisant</span></div>
+    </div>
+    <div class="theme-scores-grid">${themeRows}</div>`;
+}
+
+// ═══════════════════════════════════════ TC RESUME
+
+function updateTCResume() {
+  const el = document.getElementById('tc-resume-bars');
+  if (!el) return;
+  const rayons = CHECKLIST.tc.rayons;
+  el.innerHTML = Object.entries(rayons).map(([r, rd]) => {
+    const keys = rd.items.map((_,i) => `tc_${r}_${i}`);
+    const {ok, ko, pct} = calcScore(keys);
+    if (ok+ko === 0) return '';
+    const col = scoreColor(pct);
+    return `<div class="ts-item" style="margin-bottom:8px">
+      <span class="ts-item-lbl">${rd.label}</span>
+      <div class="ts-bar-outer"><div class="ts-bar" style="width:${pct}%;background:${col}"></div></div>
+      <span class="ts-pct" style="color:${col}">${pct}%</span>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════ PHOTOS
+
+function addPhotos(key, input) {
+  if (!photos[key]) photos[key] = [];
+  const files = Array.from(input.files);
+  files.forEach(f => compressAndStore(key, f));
+  input.value = '';
+}
+
+function handlePhotoDrop(key, event) {
+  event.preventDefault();
+  event.stopPropagation();
+  const zone = document.getElementById('pzone-' + key);
+  if (zone) zone.classList.remove('drag-over');
+  const files = Array.from(event.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+  if (!files.length) return;
+  if (!photos[key]) photos[key] = [];
+  files.forEach(f => compressAndStore(key, f));
+}
+
+function compressAndStore(key, file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      // Redimensionner à max 1200px, compresser en JPEG 75%
+      const MAX = 1200;
+      let w = img.width, h = img.height;
+      if (w > MAX || h > MAX) {
+        if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+        else       { w = Math.round(w * MAX / h); h = MAX; }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+      const compressed = canvas.toDataURL('image/jpeg', 0.75);
+      if (!photos[key]) photos[key] = [];
+      photos[key].push(compressed);
+      renderThumbs(key);
+    };
+    img.onerror = () => {
+      // Fallback sans compression si l'image ne charge pas
+      if (!photos[key]) photos[key] = [];
+      photos[key].push(e.target.result);
+      renderThumbs(key);
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function renderThumbs(key) {
+  const wrap = document.getElementById(`thumbs-${key}`);
+  if (!wrap) return;
+  wrap.innerHTML = (photos[key] || []).map((src, i) => `
+    <div class="photo-thumb">
+      <img src="${src}" alt="Photo ${i+1}">
+      <button class="photo-del" onclick="deletePhoto('${key}',${i})">×</button>
+    </div>`).join('');
+}
+
+function deletePhoto(key, idx) {
+  if (photos[key]) { photos[key].splice(idx, 1); renderThumbs(key); }
+}
+
+// ═══════════════════════════════════════ KO ACTIONS
+
+function renderKOActions() {
+  const wrap = document.getElementById('ko-actions-wrap');
+  const koKeys = Object.entries(scores).filter(([k,v]) => v === 'ko' && !dismissedKOs[k]).map(([k]) => k);
+  if (koKeys.length === 0) {
+    wrap.innerHTML = '<div class="empty"><div class="empty-icon">✓</div><div class="empty-msg">Aucun point KO pour le moment</div></div>';
+    return;
+  }
+  wrap.innerHTML = koKeys.map(key => {
+    const lbl = getCritLabel(key);
+    const act = koActions[key] || {};
+    return `<div class="ko-panel">
+      <div class="ko-panel-title">⚠ ${lbl}<button class="ko-del-btn" onclick="deleteKOAction('${key}')">🗑 Supprimer</button></div>
+      <div class="ko-action-row">
+        <input type="text" placeholder="Responsable" value="${act.resp||''}" oninput="saveKOAction('${key}','resp',this.value)">
+        <input type="date" value="${act.date||''}" oninput="saveKOAction('${key}','date',this.value)">
+      </div>
+      <div style="margin-top:6px">
+        <input type="text" style="width:100%;font-size:12px;padding:7px 10px;border:1.5px solid #FECDD3;border-radius:7px;background:#fff;color:var(--text);font-family:inherit" placeholder="Action à mener…" value="${act.action||''}" oninput="saveKOAction('${key}','action',this.value)">
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function saveKOAction(key, field, val) {
+  if (!koActions[key]) koActions[key] = {};
+  koActions[key][field] = val;
+}
+
+function getCritLabel(key) {
+  const parts = key.split('_');
+  if (parts[0] === 'tc' && parts.length === 3) {
+    return (CHECKLIST.tc.rayons[parts[1]]?.items || [])[parseInt(parts[2])] || key;
+  }
+  const tid = parts[0];
+  const idx = parseInt(parts[1]);
+  return (CHECKLIST[tid]?.items || [])[idx] || key;
+}
+
+// ═══════════════════════════════════════ THEME UI
+
+function toggleTheme(tid, hd) {
+  const body = document.getElementById(`tbody-${tid}`);
+  body.classList.toggle('open');
+  hd.setAttribute('data-open', body.classList.contains('open'));
+}
+
+function switchRayon(tid, rayon, btn) {
+  btn.closest('.rayon-row').querySelectorAll('.rtab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll(`[id^="panel-${tid}-"]`).forEach(p => p.classList.add('hidden'));
+  document.getElementById(`panel-${tid}-${rayon}`)?.classList.remove('hidden');
+  if (rayon === 'resume') updateTCResume();
+}
+
+function toggleExtra(key) {
+  const el = document.getElementById(`extra-${key}`);
+  if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+function saveComment(key, val) { comments[key] = val; }
+
+// ═══════════════════════════════════════ CLAUDE CONCLUSION
+
+async function generateConclusion() {
+  const key = cfg.claudeKey;
+  if (!key) {
+    alert('Clé API Anthropic manquante. Allez dans Réglages pour la saisir.');
+    return;
+  }
+  const allKeys = THEME_ORDER.flatMap(getThemeKeys);
+  const { ok, ko, pct } = calcScore(allKeys);
+  const koList = allKeys.filter(k => scores[k] === 'ko').map(k => '- ' + getCritLabel(k)).join('\n');
+  const okList = allKeys.filter(k => scores[k] === 'ok').map(k => getCritLabel(k)).slice(0, 8).join(', ');
+  const magasin = document.getElementById('v-magasin-libre').value || document.getElementById('v-magasin').value || 'le magasin';
+  const kpis = getKPIs();
+  const kpiText = Object.values(kpis).filter(k => k.v1).map(k => `${k.label}: ${k.v1}${k.v2 ? ` (réf: ${k.v2})` : ''}`).join(' | ');
+  const contexte = document.getElementById('v-contexte').value;
+
+  const prompt = `Tu es un responsable multisite expert en retail alimentaire. Tu dois rédiger une conclusion de visite magasin professionnelle, directe et orientée action.
+
+DONNÉES DE LA VISITE :
+- Magasin : ${magasin}
+- Date : ${document.getElementById('v-date').value}
+- Score global : ${pct}% (${scoreLabel(pct)})
+- Points conformes : ${ok} | Points KO : ${ko}
+${contexte ? `- Contexte : ${contexte}` : ''}
+${kpiText ? `- KPIs : ${kpiText}` : ''}
+
+POINTS POSITIFS RELEVÉS : ${okList || 'Aucun signalé'}
+
+NON-CONFORMITÉS (KO) :
+${koList || 'Aucune non-conformité'}
+
+SCORES PAR THÈME :
+${THEME_ORDER.map(tid => {
+  const {ok:tok, ko:tko, pct:tp} = calcScore(getThemeKeys(tid));
+  if (tok+tko === 0) return '';
+  return `- ${CHECKLIST[tid].label} : ${tp}%`;
+}).filter(Boolean).join('\n')}
+
+RÉDIGE :
+1. Un bilan synthétique en 2-3 phrases (ton direct, professionnel)
+2. Les 3 points forts à valoriser
+3. Les 3 priorités d'action immédiates avec délai suggéré
+4. Une phrase de conclusion motivante
+
+Format : texte structuré avec des tirets, sans headers markdown, environ 200-250 mots. Ton professionnel mais humain, orienté terrain.`;
+
+  const box = document.getElementById('claude-box');
+  const output = document.getElementById('claude-output');
+  box.style.display = 'block';
+  output.className = 'claude-output loading';
+  output.textContent = '✦ Claude analyse la visite et rédige la conclusion…';
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 800,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error.message);
+    const text = data.content?.[0]?.text || '';
+    output.className = 'claude-output';
+    output.textContent = text;
+    document.getElementById('claude-edit').value = text;
+    currentVisit.conclusion = text;
+  } catch (err) {
+    output.className = 'claude-output';
+    output.textContent = '⚠ Erreur : ' + err.message;
+  }
+}
+
+function toggleEditConclusion() {
+  const out = document.getElementById('claude-output');
+  const edit = document.getElementById('claude-edit');
+  const btn = document.getElementById('btn-edit-concl');
+  if (edit.style.display === 'none') {
+    edit.style.display = 'block';
+    out.style.display = 'none';
+    btn.textContent = '✓ Appliquer';
+  } else {
+    currentVisit.conclusion = edit.value;
+    out.textContent = edit.value;
+    edit.style.display = 'none';
+    out.style.display = 'block';
+    btn.textContent = '✏️ Modifier';
+  }
+}
+
+function copyConclusion() {
+  const text = document.getElementById('claude-edit').value || document.getElementById('claude-output').textContent;
+  navigator.clipboard.writeText(text).then(() => alert('Conclusion copiée !')).catch(() => {});
+}
+
+// ═══════════════════════════════════════ SAVE / VALIDATE
+
+function validateSave() {
+  const allKeys = THEME_ORDER.flatMap(getThemeKeys);
+  const scored = allKeys.filter(k => scores[k] === 'ok' || scores[k] === 'ko');
+  if (scored.length < 5) { alert('Veuillez remplir au moins 5 critères avant de valider.'); return; }
+
+  const magasin = document.getElementById('v-magasin-libre').value || document.getElementById('v-magasin').value || 'Magasin sans nom';
+  const { ok, ko, pct } = calcScore(allKeys);
+  const themeScores = {};
+  THEME_ORDER.forEach(tid => { themeScores[tid] = calcScore(getThemeKeys(tid)); });
+
+  const visit = {
+    id: Date.now(),
+    magasin,
+    date: document.getElementById('v-date').value,
+    heure: document.getElementById('v-heure').value,
+    type: document.getElementById('v-type').value,
+    visiteur: document.getElementById('v-visiteur').value,
+    contexte: document.getElementById('v-contexte').value,
+    kpis: getKPIs(),
+    kpiComment: document.getElementById('v-kpi-comment').value,
+    scores: {...scores},
+    comments: {...comments},
+    koActions: {...koActions},
+    photos: {...photos},
+    themeScores,
+    globalPct: pct,
+    ok, ko,
+    conclusion: currentVisit.conclusion || '',
+    tcCommentGlobal: document.getElementById('tc-comment-global')?.value || '',
+  };
+
+  savedVisits.unshift(visit);
+  if (savedVisits.length > 100) savedVisits = savedVisits.slice(0, 100);
+  // Sauvegarde avec photos, fallback sans photos si quota dépassé
+  try {
+    localStorage.setItem('ra_visits', JSON.stringify(savedVisits));
+  } catch(e) {
+    if (e.name === 'QuotaExceededError' || e.code === 22) {
+      const slim = savedVisits.map(v => ({...v, photos:{}}));
+      try {
+        localStorage.setItem('ra_visits', JSON.stringify(slim));
+        // Garder les photos en mémoire sur la visite courante
+      } catch(e2) {
+        // Dernier recours : vider les anciennes visites et réessayer
+        const fresh = [visit].map(v => ({...v, photos:{}}));
+        localStorage.setItem('ra_visits', JSON.stringify(fresh));
+        savedVisits = fresh;
+      }
+    } else { throw e; }
+  }
+  currentVisit = visit;
+  clearDraftById(currentDraftId); currentDraftId = null; updateDraftFAB();
+  renderMailSection(visit);
+  nav('visite');
+  alert(`✓ Visite validée et enregistrée !\nScore : ${pct}% — ${scoreLabel(pct)}\n${ko > 0 ? ko + ' point(s) KO à traiter.' : 'Aucune non-conformité.'}`);
+}
+
+function resetForm() {
+  if (!confirm('Réinitialiser le formulaire ? Les données non sauvegardées seront perdues.')) return;
+  clearDraftById(currentDraftId); currentDraftId = null; updateDraftFAB();
+  scores = {}; comments = {}; photos = {}; koActions = {}; dismissedKOs = {}; currentVisit = {};
+  document.querySelectorAll('.sbtn').forEach(b => b.className = 'sbtn');
+  document.querySelectorAll('.crit-extra').forEach(el => { el.style.display = 'none'; });
+  document.querySelectorAll('.crit-extra textarea').forEach(el => el.value = '');
+  document.querySelectorAll('.photo-thumbs').forEach(el => el.innerHTML = '');
+  document.getElementById('ko-actions-wrap').innerHTML = '<div class="empty"><div class="empty-icon">✓</div><div class="empty-msg">Les points KO apparaîtront ici automatiquement</div></div>';
+  document.getElementById('score-wrap').innerHTML = '<div class="empty"><div class="empty-icon">📊</div><div class="empty-msg">Remplissez la checklist pour voir votre score</div></div>';
+  document.getElementById('claude-box').style.display = 'none';
+  THEME_ORDER.forEach(tid => {
+    const badge = document.getElementById(`tbadge-${tid}`);
+    if (badge) { badge.textContent = '—'; badge.style.color = ''; badge.style.background = ''; badge.style.borderColor = ''; }
+  });
+  KPI_CONFIG.forEach(k => {
+    document.getElementById(`kpi-${k.id}-v1`).value = '';
+    document.getElementById(`kpi-${k.id}-v2`).value = '';
+    document.getElementById(`kpi-${k.id}-evol`).textContent = '—';
+    document.getElementById(`kpi-${k.id}-evol`).className = 'kpi-evol ev-neu';
+  });
+  document.getElementById('v-contexte').value = '';
+  document.getElementById('v-kpi-comment').value = '';
+  const today = new Date();
+  document.getElementById('v-date').value = today.toISOString().slice(0,10);
+}
+
+// ═══════════════════════════════════════ NOTION EXPORT
+
+async function exportNotion() {
+  const token = cfg.notionToken;
+  const parentId = cfg.notionParent;
+  if (!token || !parentId) {
+    alert('Token Notion et Page Parent ID manquants. Allez dans Réglages.');
+    return;
+  }
+  const allKeys = THEME_ORDER.flatMap(getThemeKeys);
+  const { ok, ko, pct } = calcScore(allKeys);
+  const magasin = document.getElementById('v-magasin-libre').value || document.getElementById('v-magasin').value || 'Magasin';
+  const date = document.getElementById('v-date').value;
+  const koList = allKeys.filter(k => scores[k] === 'ko').map(k => getCritLabel(k));
+  const kpis = getKPIs();
+
+  const statusEl = document.getElementById('notion-status');
+  statusEl.className = 'notion-status loading';
+  statusEl.style.display = 'block';
+  statusEl.textContent = '⏳ Export en cours vers Notion…';
+
+  const kpiRows = Object.values(kpis).filter(k => k.v1).map(k => {
+    let evol = '—';
+    if (k.v1 && k.v2 && parseFloat(k.v2) !== 0) {
+      const p = ((parseFloat(k.v1) - parseFloat(k.v2)) / Math.abs(parseFloat(k.v2)) * 100).toFixed(1);
+      evol = (parseFloat(p) >= 0 ? '+' : '') + p + '%';
+    }
+    return `| ${k.label} | ${k.v1} | ${k.v2 || '—'} | ${evol} |`;
+  }).join('\n');
+
+  const pageContent = {
+    parent: { page_id: parentId.replace(/-/g, '') },
+    icon: { type: 'emoji', emoji: pct >= 85 ? '✅' : pct >= 70 ? '⚠️' : '🔴' },
+    properties: {
+      title: { title: [{ text: { content: `Visite ${magasin} — ${date} — ${pct}%` } }] }
+    },
+    children: [
+      { object:'block', type:'callout', callout:{ rich_text:[{ text:{ content:`Score global : ${pct}% — ${scoreLabel(pct)} | ${ok} OK · ${ko} KO` } }], icon:{ emoji: pct >= 85 ? '✅' : pct >= 70 ? '⚠️' : '🔴' } } },
+      { object:'block', type:'heading_2', heading_2:{ rich_text:[{ text:{ content:'KPIs magasin' } }] } },
+      ...(kpiRows ? [{ object:'block', type:'paragraph', paragraph:{ rich_text:[{ text:{ content:`| Indicateur | S-1 | Réf | Évolution |\n|---|---|---|---|\n${kpiRows}` } }] } }] : []),
+      { object:'block', type:'heading_2', heading_2:{ rich_text:[{ text:{ content:'Scores par thème' } }] } },
+      ...THEME_ORDER.map(tid => {
+        const {ok:tok, ko:tko, pct:tp} = calcScore(getThemeKeys(tid));
+        if (tok+tko === 0) return null;
+        return { object:'block', type:'paragraph', paragraph:{ rich_text:[{ text:{ content:`${CHECKLIST[tid].icon} ${CHECKLIST[tid].label} : ${tp}% (${tok} OK / ${tko} KO)` } }] } };
+      }).filter(Boolean),
+      ...(koList.length > 0 ? [
+        { object:'block', type:'heading_2', heading_2:{ rich_text:[{ text:{ content:'Non-conformités (KO)' } }] } },
+        ...koList.map(lbl => ({ object:'block', type:'bulleted_list_item', bulleted_list_item:{ rich_text:[{ text:{ content:lbl } }] } }))
+      ] : []),
+      ...(currentVisit.conclusion ? [
+        { object:'block', type:'heading_2', heading_2:{ rich_text:[{ text:{ content:'Conclusion' } }] } },
+        { object:'block', type:'paragraph', paragraph:{ rich_text:[{ text:{ content: currentVisit.conclusion } }] } }
+      ] : [])
+    ]
+  };
+
+  try {
+    const res = await fetch('https://api.notion.com/v1/pages', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'Notion-Version': '2025-09-03'
+      },
+      body: JSON.stringify(pageContent)
+    });
+    const data = await res.json();
+    if (data.object === 'error') throw new Error(data.message);
+    const pageUrl = data.url || `https://notion.so/${data.id?.replace(/-/g,'')}`;
+    statusEl.className = 'notion-status ok';
+    statusEl.innerHTML = `✓ Page créée dans Notion ! <a href="${pageUrl}" target="_blank" style="color:#047857;font-weight:700;text-decoration:underline">Ouvrir →</a>`;
+  } catch (err) {
+    statusEl.className = 'notion-status err';
+    statusEl.textContent = '⚠ Erreur Notion : ' + err.message + ' — Vérifiez votre token et que la page est partagée avec votre intégration.';
+  }
+}
+
+// ═══════════════════════════════════════ PDF
+
+function buildAndPrint() {
+  const allKeys = THEME_ORDER.flatMap(getThemeKeys);
+  const { ok, ko, pct } = calcScore(allKeys);
+  const magasin = document.getElementById('v-magasin-libre').value || document.getElementById('v-magasin').value || 'Magasin';
+  const date = document.getElementById('v-date').value;
+  const visiteur = document.getElementById('v-visiteur').value;
+  const type = document.getElementById('v-type').value;
+  const contexte = document.getElementById('v-contexte').value;
+  const kpis = getKPIs();
+  const koList = allKeys.filter(k => scores[k] === 'ko').map(k => getCritLabel(k));
+  const okList = allKeys.filter(k => scores[k] === 'ok').map(k => getCritLabel(k));
+  const col = scoreColor(pct);
+
+  const kpiRows = Object.values(kpis).filter(k => k.v1).map(k => {
+    let evol = '—';
+    if (k.v1 && k.v2 && parseFloat(k.v2) !== 0) {
+      const p = ((parseFloat(k.v1) - parseFloat(k.v2)) / Math.abs(parseFloat(k.v2)) * 100).toFixed(1);
+      evol = `<span style="color:${parseFloat(p) >= 0 ? '#10B981' : '#F43F5E'};font-weight:700">${(parseFloat(p) >= 0 ? '+' : '') + p}%</span>`;
+    }
+    return `<tr><td style="padding:6px 10px;border-bottom:1px solid #f0f0f0">${k.label}</td><td style="padding:6px 10px;border-bottom:1px solid #f0f0f0;font-weight:600">${k.v1}</td><td style="padding:6px 10px;border-bottom:1px solid #f0f0f0;color:#888">${k.v2 || '—'}</td><td style="padding:6px 10px;border-bottom:1px solid #f0f0f0">${evol}</td></tr>`;
+  }).join('');
+
+  const themeRows = THEME_ORDER.map(tid => {
+    const {ok:tok, ko:tko, pct:tp} = calcScore(getThemeKeys(tid));
+    if (tok+tko === 0) return '';
+    const tc = scoreColor(tp);
+    return `<tr><td style="padding:6px 10px;border-bottom:1px solid #f0f0f0">${CHECKLIST[tid].icon} ${CHECKLIST[tid].label}</td><td style="padding:6px 10px;border-bottom:1px solid #f0f0f0;font-weight:700;color:${tc}">${tp}%</td><td style="padding:6px 10px;border-bottom:1px solid #f0f0f0;color:#F43F5E">${tko} KO</td><td style="padding:6px 10px;border-bottom:1px solid #f0f0f0;color:#888">${tok} OK / ${tok+tko}</td></tr>`;
+  }).join('');
+
+  const photoBlocks = Object.entries(photos).filter(([,p]) => p.length > 0).map(([key, imgs]) => {
+    const lbl = getCritLabel(key);
+    const imgTags = imgs.map(src => `<img src="${src}" style="width:140px;height:140px;object-fit:cover;border-radius:10px;border:2px solid #e5e7eb">`).join('');
+    return `<div style="margin-bottom:16px"><div style="font-size:13px;font-weight:700;color:#BE123C;margin-bottom:8px">⚠ ${lbl}</div><div style="display:flex;gap:10px;flex-wrap:wrap">${imgTags}</div></div>`;
+  }).join('');
+
+  const html = `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>CR Visite — ${magasin} — ${date}</title>
+  <style>
+  body{font-family:'Inter','Helvetica',Arial,sans-serif;font-size:12px;color:#1F1B3D;margin:0;padding:0;background:#fff}
+  .page{max-width:820px;margin:0 auto;padding:2rem}
+  .hdr{background:linear-gradient(135deg,#5B5FED 0%,#7C3AED 50%,#FF6B6B 100%);color:#fff;border-radius:16px;padding:20px 24px;margin-bottom:24px;position:relative;overflow:hidden}
+  .hdr::before{content:'';position:absolute;top:-50%;right:-20%;width:60%;height:200%;background:radial-gradient(circle,rgba(255,255,255,0.18) 0%,transparent 60%);pointer-events:none}
+  .hdr-flex{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;position:relative;z-index:1}
+  .logo{font-size:22px;font-weight:800;letter-spacing:-0.02em}
+  .meta{text-align:right;font-size:12px;line-height:1.8;word-break:break-word;overflow-wrap:break-word;max-width:55%}
+  .meta strong{font-size:15px;display:block;line-height:1.3;word-break:break-word;overflow-wrap:break-word}
+  @media print{.hdr-flex{flex-direction:column;gap:8px}.meta{text-align:left;max-width:100%}}
+  h2{font-size:14px;font-weight:700;color:#5B5FED;border-bottom:2px solid #EEF0FF;padding-bottom:6px;margin:22px 0 12px}
+  table{width:100%;border-collapse:collapse;font-size:11px;border-radius:8px;overflow:hidden}
+  th{background:#5B5FED;color:#fff;padding:8px 10px;text-align:left;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em}
+  .score-card{display:inline-flex;align-items:center;gap:14px;padding:14px 22px;border-radius:14px;background:linear-gradient(135deg,${col} 0%,${col}cc 100%);color:#fff;box-shadow:0 4px 12px ${col}40}
+  .score-pct{font-size:32px;font-weight:800;letter-spacing:-0.03em}
+  .score-lbl{font-size:13px;font-weight:600}
+  .ok-chip{display:inline-block;background:#D1FAE5;color:#047857;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;border:1px solid #86EFAC}
+  .ko-chip{display:inline-block;background:#FFE4E6;color:#BE123C;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;border:1px solid #FCA5A5}
+  .ctx-callout{background:linear-gradient(135deg,#EEF0FF 0%,#FDF4FF 100%);border-left:4px solid #5B5FED;padding:12px 16px;border-radius:8px;margin-bottom:18px}
+  .conclusion-box{background:linear-gradient(135deg,#FDF4FF 0%,#EEF0FF 100%);border:2px solid #E9D5FF;border-radius:12px;padding:16px;font-size:12px;line-height:1.75;white-space:pre-wrap}
+  .footer{font-size:10px;color:#9CA0BA;text-align:center;margin-top:2.5rem;border-top:1px solid #EEF0FF;padding-top:12px}
+  @page{margin:1.5cm}@media print{body{padding:0}.no-print{display:none!important}}
+  </style></head>
+  <body>
+  <div class="no-print" style="position:sticky;top:0;z-index:999;background:#fff;border-bottom:1px solid #e5e7eb;padding:10px 20px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.08)">
+    <span style="font-size:13px;font-weight:600;color:#5B5FED">◆ RetailOps 360 — Aperçu PDF</span>
+    <div style="display:flex;gap:10px">
+      <button onclick="window.print()" style="background:linear-gradient(135deg,#5B5FED,#7C3AED);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer">🖨 Imprimer / PDF</button>
+      <button onclick="window.close()" style="background:#f1f5f9;color:#374151;border:1px solid #e5e7eb;border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer">✕ Fermer</button>
+    </div>
+  </div>
+  <div class="page">
+  <div class="hdr"><div class="hdr-flex">
+    <div><div class="logo">◆ RETAIL AUDIT</div><div style="font-size:12px;opacity:0.9;margin-top:4px">Compte rendu de visite magasin</div></div>
+    <div class="meta"><strong>${magasin}</strong><span style="opacity:.85">${date}</span> · ${type}<br>Visité par : ${visiteur || '—'}</div>
+  </div></div>
+  ${contexte ? `<div class="ctx-callout"><strong>📌 Contexte :</strong> ${contexte}</div>` : ''}
+  ${kpiRows ? `<h2>📈 KPIs magasin</h2><table><thead><tr><th>Indicateur</th><th>S-1</th><th>Réf S-2</th><th>Évolution</th></tr></thead><tbody>${kpiRows}</tbody></table>` : ''}
+  <h2>🏆 Score global</h2>
+  <div style="margin:14px 0"><div class="score-card"><span class="score-pct">${pct}%</span><div><div class="score-lbl">${scoreLabel(pct)}</div><div style="font-size:11px;opacity:0.9;margin-top:2px">${ok} OK · ${ko} KO</div></div></div></div>
+  <h2>📊 Score par thème</h2>
+  <table><thead><tr><th>Thème</th><th>Score</th><th>KO</th><th>Détail</th></tr></thead><tbody>${themeRows}</tbody></table>
+  ${okList.length ? `<h2 style="color:#10B981">✓ Points positifs</h2><ul style="padding-left:1.2rem;line-height:2;font-size:12px">${okList.slice(0,12).map(l => `<li>${l} <span class="ok-chip">OK</span></li>`).join('')}</ul>` : ''}
+  ${koList.length ? `<h2 style="color:#F43F5E">⚠ Points à améliorer</h2><ul style="padding-left:1.2rem;line-height:2;font-size:12px">${koList.map(l => `<li>${l} <span class="ko-chip">KO</span></li>`).join('')}</ul>` : ''}
+  ${photoBlocks ? `<h2>📷 Photos des non-conformités</h2>${photoBlocks}` : ''}
+  ${koList.length ? `<h2>📋 Suivi — Prochaine visite</h2>
+  <table><thead><tr><th>Non-conformité</th><th>Responsable</th><th>Délai</th><th>Action</th><th>Statut</th></tr></thead><tbody>
+  ${koList.map(l => {
+    const key = Object.entries(scores).find(([k,v]) => v === 'ko' && getCritLabel(k) === l)?.[0];
+    const act = key ? (koActions[key] || {}) : {};
+    return `<tr><td style="padding:6px 10px;border-bottom:1px solid #f0f0f0">${l}</td><td style="padding:6px 10px;border-bottom:1px solid #f0f0f0">${act.resp||''}</td><td style="padding:6px 10px;border-bottom:1px solid #f0f0f0">${act.date||''}</td><td style="padding:6px 10px;border-bottom:1px solid #f0f0f0">${act.action||''}</td><td style="padding:6px 10px;border-bottom:1px solid #f0f0f0"><span style="background:#FEF3C7;color:#B45309;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700">Ouvert</span></td></tr>`;
+  }).join('')}
+  </tbody></table>` : ''}
+  ${currentVisit.conclusion ? `<h2>✦ Conclusion</h2><div class="conclusion-box">${currentVisit.conclusion}</div>` : ''}
+  <div class="footer">Document généré le ${new Date().toLocaleDateString('fr-FR')} — Retail Audit App</div>
+  </div></body></html>`;
+
+  const w = window.open('', '_blank');
+  w.document.write(html);
+  w.document.close();
+  // Impression manuelle via bouton dans la page
+}
+
+// ═══════════════════════════════════════ DASHBOARD
+
+function renderDashboard() {
+  if (savedVisits.length === 0) {
+    document.getElementById('dash-kpis').innerHTML = '<div style="grid-column:1/-1" class="empty"><div class="empty-icon">📊</div><div class="empty-msg">Aucune visite enregistrée. Réalisez votre première visite.</div></div>';
+    document.getElementById('dash-ranking').innerHTML = '';
+    document.getElementById('dash-theme-bars').innerHTML = '';
+    document.getElementById('dash-top-ko').innerHTML = '';
+    return;
+  }
+  const avg = Math.round(savedVisits.reduce((s,v) => s+v.globalPct, 0) / savedVisits.length);
+  const totalKO = savedVisits.reduce((s,v) => s+v.ko, 0);
+  const mags = [...new Set(savedVisits.map(v => v.magasin))];
+  const avgColor = scoreColor(avg);
+  document.getElementById('dash-kpis').innerHTML = `
+    <div class="dash-kpi c1"><div class="dash-kpi-icon">📋</div><div class="dash-kpi-lbl">Visites réalisées</div><div class="dash-kpi-val">${savedVisits.length}</div></div>
+    <div class="dash-kpi c2"><div class="dash-kpi-icon">🎯</div><div class="dash-kpi-lbl">Score moyen</div><div class="dash-kpi-val" style="color:${avgColor}">${avg}%</div></div>
+    <div class="dash-kpi c3"><div class="dash-kpi-icon">🏪</div><div class="dash-kpi-lbl">Magasins visités</div><div class="dash-kpi-val">${mags.length}</div></div>
+    <div class="dash-kpi c4"><div class="dash-kpi-icon">⚠️</div><div class="dash-kpi-lbl">KO total ouverts</div><div class="dash-kpi-val" style="color:#F43F5E">${totalKO}</div></div>`;
+
+  const byMag = {};
+  savedVisits.forEach(v => { if (!byMag[v.magasin] || v.date > byMag[v.magasin].date) byMag[v.magasin] = v; });
+  const sorted = Object.values(byMag).sort((a,b) => b.globalPct - a.globalPct);
+
+  // Top/Bottom 10
+  renderTopBottom(sorted);
+  // Carte géo
+  renderGeoMap(sorted);
+  document.getElementById('dash-ranking').innerHTML = sorted.map((v, i) => {
+    const cls = v.globalPct < 70 ? 'r' : v.globalPct < 85 ? 'a' : 'g';
+    const posClass = i === 0 ? 'first' : i === 1 ? 'second' : i === 2 ? 'third' : '';
+    return `<div class="store-rank-row"><span class="name"><span class="rank-pos ${posClass}">${i+1}</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${v.magasin}</span></span><span class="badge ${cls}">${v.globalPct}%</span><span style="color:#F43F5E;font-size:12px;font-weight:600">${v.ko}</span><span style="font-size:11px;color:var(--text-3)">${v.date}</span></div>`;
+  }).join('') || '<div class="empty"><div class="empty-msg">Aucune donnée</div></div>';
+
+  const last = savedVisits[0];
+  const themeNames = { tc:'Tenue comm.', gestion:'Gestion', proprete:'Propreté', rh:'RH', client:'Client', politique:'Politique comm.', hygiene:'Hygiène' };
+  document.getElementById('dash-theme-bars').innerHTML = `
+    <div style="font-size:11px;color:var(--text-3);margin-bottom:.75rem;font-weight:600">📍 ${last.magasin} — ${last.date}</div>
+    ${THEME_ORDER.map(tid => {
+      const s = last.themeScores?.[tid];
+      if (!s || s.total === 0) return '';
+      const col = scoreColor(s.pct);
+      return `<div class="ts-item" style="margin-bottom:8px"><span class="ts-item-lbl">${CHECKLIST[tid].icon} ${themeNames[tid]}</span><div class="ts-bar-outer"><div class="ts-bar" style="width:${s.pct}%;background:${col}"></div></div><span class="ts-pct" style="color:${col}">${s.pct}%</span></div>`;
+    }).join('')}`;
+
+  const koMap = {};
+  savedVisits.forEach(v => Object.entries(v.scores||{}).forEach(([k,val]) => { if (val === 'ko') koMap[k] = (koMap[k]||0)+1; }));
+  const topKO = Object.entries(koMap).sort((a,b) => b[1]-a[1]).slice(0,5);
+  document.getElementById('dash-top-ko').innerHTML = topKO.length === 0
+    ? '<div class="empty"><div class="empty-msg">Aucune donnée disponible</div></div>'
+    : topKO.map(([k,c]) => `<div class="ko-top-row"><span>${getCritLabel(k)}</span><span class="badge r">${c}x</span></div>`).join('');
+
+  renderEvolutionChart();
+}
+
+function renderEvolutionChart() {
+  const canvas = document.getElementById('chart-evolution');
+  if (!canvas) return;
+  if (evolutionChart) { evolutionChart.destroy(); evolutionChart = null; }
+  const sorted = [...savedVisits].reverse();
+  if (sorted.length < 2) { canvas.parentElement.innerHTML = '<div class="empty"><div class="empty-icon">📈</div><div class="empty-msg">Au moins 2 visites nécessaires pour afficher l\'évolution</div></div>'; return; }
+  const ctx = canvas.getContext('2d');
+  const gradient = ctx.createLinearGradient(0, 0, 0, 200);
+  gradient.addColorStop(0, 'rgba(91, 95, 237, 0.25)');
+  gradient.addColorStop(1, 'rgba(91, 95, 237, 0.02)');
+  evolutionChart = new Chart(canvas, {
+    type: 'line',
+    data: {
+      labels: sorted.map(v => v.date.slice(5) + ' ' + v.magasin.slice(0,12)),
+      datasets: [{
+        label: 'Score (%)',
+        data: sorted.map(v => v.globalPct),
+        borderColor: '#5B5FED',
+        backgroundColor: gradient,
+        borderWidth: 3,
+        pointRadius: 5,
+        pointBackgroundColor: '#fff',
+        pointBorderColor: '#5B5FED',
+        pointBorderWidth: 2.5,
+        pointHoverRadius: 7,
+        tension: 0.35,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1F1B3D', titleFont:{family:'Inter',weight:600}, bodyFont:{family:'Inter'}, padding:10, cornerRadius:8 } },
+      scales: {
+        y: { min: 0, max: 100, ticks: { font: { size: 11, family: 'Inter' }, color: '#9CA0BA' }, grid: { color: 'rgba(91, 95, 237, 0.06)' } },
+        x: { ticks: { font: { size: 10, family: 'Inter' }, color: '#9CA0BA', maxRotation: 30 }, grid: { display: false } }
+      }
+    }
+  });
+}
+
+// ═══════════════════════════════════════ HISTORIQUE
+
+function renderHistorique() {
+  const list = document.getElementById('hist-list');
+  if (savedVisits.length === 0) {
+    list.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><div class="empty-msg">Aucune visite enregistrée</div></div>';
+    return;
+  }
+  list.innerHTML = savedVisits.map(v => {
+    const cls = v.globalPct < 70 ? 'r' : v.globalPct < 85 ? 'a' : 'g';
+    const typeShort = v.type?.replace('Visite ','').replace('Audit ','').slice(0,12) || '—';
+    return `<div class="hist-row" onclick="showVisitModal(${v.id})">
+      <span style="font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${v.magasin}</span>
+      <span style="font-size:11px;color:var(--text-3)">${typeShort}</span>
+      <span class="badge ${cls}">${v.globalPct}%</span>
+      <span style="color:var(--rose);font-size:12px;font-weight:600">${v.ko}</span>
+      <span style="font-size:11px;color:var(--text-3)">${v.date}</span>
+    </div>`;
+  }).join('');
+}
+
+function showVisitModal(id) {
+  const v = savedVisits.find(x => x.id === id);
+  if (!v) return;
+  document.getElementById('modal-visit-title').textContent = `${v.magasin} — ${v.date}`;
+  const koKeys = Object.entries(v.scores||{}).filter(([,val]) => val === 'ko');
+  document.getElementById('modal-visit-body').innerHTML = `
+    <div style="display:flex;gap:14px;align-items:center;margin-bottom:1.25rem;padding:14px;background:linear-gradient(135deg,${scoreColor(v.globalPct)}15,${scoreColor(v.globalPct)}05);border-radius:12px;border:1.5px solid ${scoreColor(v.globalPct)}30">
+      <span style="font-size:30px;font-weight:800;color:${scoreColor(v.globalPct)};font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:-0.03em">${v.globalPct}%</span>
+      <div><div style="font-size:14px;font-weight:600;color:${scoreColor(v.globalPct)}">${scoreLabel(v.globalPct)}</div><div style="font-size:12px;color:var(--text-3);margin-top:2px">${v.ok} OK · <span style="color:var(--rose);font-weight:600">${v.ko} KO</span></div></div>
+    </div>
+    ${v.contexte ? `<div style="font-size:12px;color:var(--text-2);margin-bottom:.75rem;padding:8px 12px;background:var(--surface-2);border-radius:8px"><strong>📌 Contexte :</strong> ${v.contexte}</div>` : ''}
+    <div style="font-size:12px;font-weight:700;color:var(--rose);margin-top:.875rem;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:0.04em">⚠ Non-conformités</div>
+    ${koKeys.length > 0 ? koKeys.map(([k]) => `<div style="font-size:12px;padding:6px 10px;background:var(--rose-bg);border-radius:6px;margin-bottom:4px;color:#BE123C">⚠ ${getCritLabel(k)}</div>`).join('') : '<div style="font-size:12px;color:var(--emerald);font-weight:500">✓ Aucune non-conformité</div>'}
+    ${v.conclusion ? `<div style="font-size:12px;margin-top:1rem"><strong style="color:#7C3AED">✦ Conclusion :</strong><div style="color:var(--text-2);line-height:1.65;margin-top:6px;padding:10px 12px;background:linear-gradient(135deg,#FDF4FF,#EEF0FF);border-radius:8px;border:1px solid #E9D5FF">${v.conclusion}</div></div>` : ''}`;
+  document.getElementById('modal-visit').classList.add('open');
+  window._printVisitId = id;
+}
+
+function printVisit() {
+  const id = window._printVisitId;
+  if (!id) return;
+  const v = savedVisits.find(x => x.id === id);
+  if (!v) return;
+  currentVisit = v;
+  scores = { ...v.scores };
+  koActions = { ...v.koActions };
+  photos = { ...v.photos };
+  buildAndPrint();
+}
+
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+// ═══════════════════════════════════════ CONFIG / STORES
+
+function populateStoreSelect() {
+  const sel = document.getElementById('v-magasin');
+  sel.innerHTML = '<option value="">— Sélectionner —</option>';
+  stores.sort().forEach(s => {
+    const opt = document.createElement('option');
+    opt.value = s; opt.textContent = s;
+    sel.appendChild(opt);
+  });
+}
+
+function syncMagasinInput() {
+  const sel = document.getElementById('v-magasin');
+  const libre = document.getElementById('v-magasin-libre');
+  if (sel.value) libre.value = sel.value;
+}
+
+function renderStoreList() {
+  document.getElementById('store-list').innerHTML = stores.sort().map((s) =>
+    `<li class="store-item"><span>🏪 ${s}</span><button class="store-del" onclick="removeStore(${stores.indexOf(s)})" title="Supprimer">×</button></li>`
+  ).join('');
+}
+
+function addStore() {
+  const name = document.getElementById('new-store-name').value.trim();
+  const city = document.getElementById('new-store-city').value.trim();
+  if (!name) return;
+  const full = city ? `${name} ${city}` : name;
+  if (!stores.includes(full)) { stores.push(full); saveStores(); }
+  document.getElementById('new-store-name').value = '';
+  document.getElementById('new-store-city').value = '';
+}
+
+function removeStore(idx) {
+  if (confirm(`Supprimer "${stores[idx]}" ?`)) { stores.splice(idx, 1); saveStores(); }
+}
+
+function saveStores() {
+  localStorage.setItem('ra_stores', JSON.stringify(stores));
+  populateStoreSelect();
+  renderStoreList();
+}
+
+function loadCfgUI() {
+  document.getElementById('cfg-claude-key').value = cfg.claudeKey || '';
+  document.getElementById('cfg-notion-token').value = cfg.notionToken || '';
+  document.getElementById('cfg-notion-parent').value = cfg.notionParent || '';
+}
+
+function saveCfg() {
+  cfg.claudeKey = document.getElementById('cfg-claude-key').value;
+  cfg.notionToken = document.getElementById('cfg-notion-token').value;
+  cfg.notionParent = document.getElementById('cfg-notion-parent').value;
+  localStorage.setItem('ra_cfg', JSON.stringify(cfg));
+}
+
+function exportData() {
+  const data = { visits: savedVisits, stores, exportDate: new Date().toISOString() };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = `retail-audit-backup-${new Date().toISOString().slice(0,10)}.json`; a.click();
+}
+
+function importData() {
+  const input = document.createElement('input'); input.type = 'file'; input.accept = '.json';
+  input.onchange = e => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try {
+        const data = JSON.parse(ev.target.result);
+        if (data.visits) { savedVisits = data.visits; localStorage.setItem('ra_visits', JSON.stringify(savedVisits)); }
+        if (data.stores) { stores = data.stores; saveStores(); }
+        alert('Données importées avec succès !');
+      } catch { alert('Fichier invalide.'); }
+    };
+    reader.readAsText(e.target.files[0]);
+  };
+  input.click();
+}
+
+function clearAll() {
+  if (confirm('Effacer toutes les visites ? Cette action est irréversible.')) {
+    savedVisits = []; localStorage.removeItem('ra_visits'); alert('Visites effacées.');
+  }
+}
+
+// ═══════════════════════════════════════ NAVIGATION
+
+function nav(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(`s-${id}`).classList.add('active');
+  const tabs = ['visite','dashboard','historique','mail','config'];
+  document.querySelectorAll('.nav-tab')[tabs.indexOf(id)]?.classList.add('active');
+  if (id === 'dashboard') renderDashboard();
+  if (id === 'historique') renderHistorique();
+  if (id === 'config') renderStoreList();
+  if (id === 'mail') renderMailSection();
+}
+
+// ═══════════════════════════════════════ MAIL AUTO
+
+let mailActions = [];
+
+function generateMail() {
+  const v = savedVisits[0] || currentVisit;
+  if (!v || !v.magasin) return;
+  renderMailSection(v);
+}
+
+function renderMailSection(v) {
+  v = v || savedVisits[0] || currentVisit;
+  if (!v || !v.magasin) {
+    document.getElementById('mail-body-text').value = 'Validez une visite pour générer le mail automatiquement.';
+    const pr = document.getElementById('mail-body-preview');
+    if (pr) pr.innerHTML = '<p style="color:#9ca3af;font-style:italic;padding:20px">Validez une visite pour générer le mail automatiquement.</p>';
+    return;
+  }
+
+  const allKeys = Object.keys(v.scores || {});
+  const koKeys = allKeys.filter(k => v.scores[k] === 'ko');
+  const okKeys = allKeys.filter(k => v.scores[k] === 'ok');
+  const col = v.globalPct >= 85 ? 'Très satisfaisant' : v.globalPct >= 70 ? 'Correct' : 'Critique';
+
+  // Objet
+  document.getElementById('mail-subject').value = `Compte-rendu visite ${v.magasin} — ${v.date} — Score ${v.globalPct}%`;
+  document.getElementById('mail-visit-info').textContent = `${v.magasin} · ${v.date} · ${v.visiteur || '—'}`;
+
+  // Points forts (OK les plus représentatifs)
+  const okSample = okKeys.slice(0, 4).map(k => `  • ${getCritLabel(k)}`).join('\n');
+
+  // Axes d'amélioration (KO)
+  const koSample = koKeys.length > 0
+    ? koKeys.map(k => `  • ${getCritLabel(k)}`).join('\n')
+    : '  Aucune non-conformité relevée.';
+
+  // Plan d'actions depuis koActions
+  const actionsLines = koKeys.map(k => {
+    const act = v.koActions?.[k] || koActions[k] || {};
+    const resp = act.resp || '___________';
+    const date = act.date || '___/___/___';
+    const action = act.action || getCritLabel(k);
+    return `  • ${action} | Responsable : ${resp} | Échéance : ${date}`;
+  }).join('\n');
+
+  // ── Barre de score colorée (🟩 OK / 🟥 KO) ──────────────────
+  const total = (v.ok || 0) + (v.ko || 0);
+  const greenCount = total > 0 ? Math.round((v.ok || 0) / total * 10) : Math.round(v.globalPct / 10);
+  const redCount   = 10 - greenCount;
+  const scoreBar   = '🟩'.repeat(greenCount) + '🟥'.repeat(redCount);
+  const scoreDot   = v.globalPct >= 85 ? '🟢' : v.globalPct >= 70 ? '🟡' : '🔴';
+  const SEP_H      = '═'.repeat(42);
+  const SEP_L      = '┄'.repeat(42);
+
+  // ── Contexte ─────────────────────────────────────────────────
+  const contexteBlock = v.contexte
+    ? `\n📌 CONTEXTE\n${SEP_L}\n${v.contexte}\n`
+    : '';
+
+  // ── Scores par thème ─────────────────────────────────────────
+  const themeLines = (() => {
+    try {
+      return THEME_ORDER.map(tid => {
+        const keys = getThemeKeys(tid);
+        const sc   = v.scores || {};
+        const tOk  = keys.filter(k => sc[k] === 'ok').length;
+        const tKo  = keys.filter(k => sc[k] === 'ko').length;
+        if (tOk + tKo === 0) return null;
+        const tp  = Math.round(tOk / (tOk + tKo) * 100);
+        const dot = tp >= 85 ? '🟢' : tp >= 70 ? '🟡' : '🔴';
+        const koTag = tKo > 0 ? `  ❌ ${tKo} KO` : '  ✅ OK';
+        return `  ${dot}  ${CHECKLIST[tid].icon} ${CHECKLIST[tid].label.padEnd(30,' ')} ${String(tp).padStart(3,' ')}%${koTag}`;
+      }).filter(Boolean).join('\n');
+    } catch(e) { return ''; }
+  })();
+
+  // ── Points forts ─────────────────────────────────────────────
+  const okBlock = okKeys.slice(0, 5).map(k => `  ✓  ${getCritLabel(k)}`).join('\n')
+    || '  Aucun point fort renseigné.';
+
+  // ── Non-conformités ──────────────────────────────────────────
+  const koBlock = koKeys.length > 0
+    ? koKeys.map(k => `  ✗  ${getCritLabel(k)}`).join('\n')
+    : '  Aucune non-conformité relevée. ✅';
+
+  // ── Plan d'actions numéroté ───────────────────────────────────
+  const actionsBlock = koKeys.length > 0
+    ? koKeys.map((k, i) => {
+        const act    = v.koActions?.[k] || koActions[k] || {};
+        const action = act.action || getCritLabel(k);
+        const resp   = act.resp   || '___________';
+        const date   = act.date   || '___/___/___';
+        const num    = String(i + 1).padStart(2, '0');
+        return `  ${num}.  ${action}\n       👤  ${resp}\n       📅  ${date}`;
+      }).join('\n\n')
+    : '  Aucune action corrective requise.';
+
+  // ── Date formatée ─────────────────────────────────────────────
+  const dateFr = new Date(v.date + 'T12:00:00').toLocaleDateString('fr-FR', {
+    weekday:'long', day:'numeric', month:'long', year:'numeric'
+  });
+
+  const body = `Bonjour,
+
+Suite à ma visite du ${dateFr}, veuillez trouver ci-dessous le compte rendu du magasin ${v.magasin}${v.type ? ' (' + v.type + ')' : ''}.
+${contexteBlock}
+${SEP_H}
+  ${scoreDot}  SCORE GLOBAL : ${v.globalPct}%  —  ${col.toUpperCase()}
+${SEP_H}
+
+  ${scoreBar}
+  ✅ ${v.ok} point(s) conforme(s)        ❌ ${v.ko} non-conformité(s)
+
+
+📊 RÉSULTATS PAR THÈME
+${SEP_L}
+${themeLines}
+
+
+✅ POINTS FORTS
+${SEP_L}
+${okBlock}
+
+
+⚠️  NON-CONFORMITÉS RELEVÉES  (${v.ko})
+${SEP_L}
+${koBlock}
+
+
+📋 PLAN D'ACTIONS CORRECTIVES
+${SEP_L}
+
+${actionsBlock}
+
+${v.conclusion ? '✦ CONCLUSION\n' + SEP_L + '\n' + v.conclusion + '\n\n' : ''}
+Je reste disponible pour tout échange sur ces points.
+
+Bien cordialement,
+
+${v.visiteur || 'Le responsable multisite'}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RetailOps 360 — Responsable Multisite`;
+
+  // Générer le HTML de l'aperçu
+  const greenPx = Math.round(greenCount * 10);
+  const redPx   = 100 - greenPx;
+  const scoreBg = v.globalPct >= 85 ? '#10B981' : v.globalPct >= 70 ? '#F59E0B' : '#EF4444';
+  const themeHTML = (() => {
+    try {
+      return THEME_ORDER.map(tid => {
+        const keys = getThemeKeys(tid);
+        const sc   = v.scores || {};
+        const tOk  = keys.filter(k => sc[k] === 'ok').length;
+        const tKo  = keys.filter(k => sc[k] === 'ko').length;
+        if (tOk + tKo === 0) return '';
+        const tp   = Math.round(tOk / (tOk + tKo) * 100);
+        const clr  = tp >= 85 ? '#10B981' : tp >= 70 ? '#F59E0B' : '#EF4444';
+        const dot  = tp >= 85 ? '🟢' : tp >= 70 ? '🟡' : '🔴';
+        const barW = Math.round(tp * 1.2);
+        return `<tr style="border-bottom:1px solid #f3f4f6">
+          <td style="padding:7px 8px;font-size:13px">${dot}&nbsp;${CHECKLIST[tid].icon}&nbsp;${CHECKLIST[tid].label}</td>
+          <td style="padding:7px 8px;white-space:nowrap">
+            <table cellpadding="0" cellspacing="0" border="0" style="display:inline-table;vertical-align:middle"><tr>
+              <td width="${barW}" height="7" bgcolor="${clr}" style="background:${clr};font-size:0">&nbsp;</td>
+              <td width="${120 - barW}" height="7" bgcolor="#f3f4f6" style="background:#f3f4f6;font-size:0">&nbsp;</td>
+            </tr></table>
+            <span style="margin-left:6px;font-weight:bold;color:${clr};font-size:13px">${tp}%</span>
+          </td>
+          <td style="padding:7px 8px;font-weight:bold;font-size:13px;color:${tKo > 0 ? '#EF4444' : '#10B981'}">${tKo > 0 ? '❌ ' + tKo + ' KO' : '✅'}</td>
+        </tr>`;
+      }).join('');
+    } catch(e) { return ''; }
+  })();
+  const okHTML = okKeys.slice(0, 5).map(k =>
+    `<tr style="border-bottom:1px solid #f9fafb"><td style="padding:5px 8px;color:#047857;font-size:13px">✓&nbsp;&nbsp;${getCritLabel(k)}</td></tr>`).join('') ||
+    '<tr><td style="padding:8px;color:#9ca3af;font-size:13px">Aucun point fort renseigné.</td></tr>';
+  const koHTML = koKeys.map(k =>
+    `<tr style="border-bottom:1px solid #fef2f2"><td style="padding:5px 8px;color:#374151;font-size:13px">✗&nbsp;&nbsp;${getCritLabel(k)}</td></tr>`).join('') ||
+    '<tr><td style="padding:8px;color:#10B981;font-size:13px">Aucune non-conformité relevée ✅</td></tr>';
+  window._buildActHTML = (items) => items.map((k, i) => {
+    const isKey  = typeof k === 'string';
+    const act    = isKey ? (v.koActions?.[k] || koActions[k] || {}) : k;
+    const action = isKey ? (act.action || getCritLabel(k)) : (k.action || k.ko);
+    const resp   = act.resp || '___________';
+    const date   = act.date || '___/___/___';
+    const num    = String(i + 1).padStart(2, '0');
+    return `<tr style="border-bottom:1px solid #f3f4f6">
+      <td style="padding:8px 10px;vertical-align:top;font-size:13px">
+        <span style="background:#EEF2FF;color:#5B5FED;padding:2px 6px;font-size:11px;font-weight:bold;margin-right:6px">${num}</span>${action}
+      </td>
+      <td style="padding:8px 10px;font-size:13px;color:#374151">👤&nbsp;${resp}</td>
+      <td style="padding:8px 10px;font-size:13px;white-space:nowrap">📅&nbsp;${date}</td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="3" style="padding:10px;color:#9ca3af;font-size:13px">Aucune action requise.</td></tr>';
+  const buildActHTML = window._buildActHTML;
+  const actHTML = buildActHTML(koKeys);
+
+  // HTML email Outlook-compatible (table-based, inline styles)
+  const scoreBarW = Math.round(greenPx * 4);   // 400px total
+  const scoreBarR = 400 - scoreBarW;
+  const previewHTML = `
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#1a1a2e;max-width:620px">
+  <tr><td style="padding:0 0 14px">
+    <p style="margin:0 0 10px;font-size:14px">Bonjour,</p>
+    <p style="margin:0;font-size:14px;line-height:1.6">Suite à ma visite du <strong>${dateFr}</strong>, veuillez trouver ci-dessous le compte rendu du magasin <strong>${v.magasin}</strong>${v.type ? ' <em>(' + v.type + ')</em>' : ''}.</p>
+  </td></tr>
+  ${v.contexte ? `<tr><td style="padding:0 0 14px">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+      <td width="4" bgcolor="#5B5FED" style="background:#5B5FED"></td>
+      <td bgcolor="#EEF2FF" style="background:#EEF2FF;padding:10px 14px;font-size:13px;color:#374151">
+        <strong style="color:#5B5FED">📌 Contexte</strong><br>${v.contexte.replace(/\n/g,'<br>')}
+      </td>
+    </tr></table>
+  </td></tr>` : ''}
+  <tr><td style="padding:0 0 18px">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr><td bgcolor="${scoreBg}" style="background:${scoreBg};padding:16px 20px">
+        <p style="margin:0 0 4px;font-size:11px;font-weight:bold;color:#fff;letter-spacing:1px">SCORE GLOBAL</p>
+        <p style="margin:0 0 12px;font-size:30px;font-weight:bold;color:#fff">${v.globalPct}%&nbsp;&nbsp;<span style="font-size:16px;font-weight:normal">— ${col}</span></p>
+        <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px">
+          <tr>
+            <td width="${scoreBarW}" height="10" bgcolor="#ffffff" style="background:#ffffff;font-size:0">&nbsp;</td>
+            <td width="${scoreBarR}" height="10" bgcolor="rgba(0,0,0,0.25)" style="background:rgba(0,0,0,0.25);font-size:0">&nbsp;</td>
+          </tr>
+        </table>
+        <p style="margin:0;font-size:13px;color:#fff"><strong>${v.ok}</strong> point(s) conforme(s) &nbsp;&bull;&nbsp; <strong>${v.ko}</strong> non-conformité(s)</p>
+      </td></tr>
+    </table>
+  </td></tr>
+  <tr><td style="padding:0 0 6px;border-bottom:2px solid #EEF2FF">
+    <p style="margin:0;font-size:12px;font-weight:bold;color:#5B5FED;letter-spacing:1px;text-transform:uppercase">📊 Résultats par thème</p>
+  </td></tr>
+  <tr><td style="padding:8px 0 16px">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:13px">
+      ${themeHTML}
+    </table>
+  </td></tr>
+  <tr><td style="padding:0 0 6px;border-bottom:2px solid #D1FAE5">
+    <p style="margin:0;font-size:12px;font-weight:bold;color:#10B981;letter-spacing:1px;text-transform:uppercase">✅ Points forts</p>
+  </td></tr>
+  <tr><td style="padding:8px 0 16px">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:13px">${okHTML}</table>
+  </td></tr>
+  <tr><td style="padding:0 0 6px;border-bottom:2px solid #FFE4E6">
+    <p style="margin:0;font-size:12px;font-weight:bold;color:#EF4444;letter-spacing:1px;text-transform:uppercase">⚠️ Non-conformités relevées (${v.ko})</p>
+  </td></tr>
+  <tr><td style="padding:8px 0 16px">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:13px">${koHTML}</table>
+  </td></tr>
+  <tr><td style="padding:0 0 6px;border-bottom:2px solid #f3f4f6">
+    <p style="margin:0;font-size:12px;font-weight:bold;color:#374151;letter-spacing:1px;text-transform:uppercase">📋 Plan d'actions correctives</p>
+  </td></tr>
+  <tr><td style="padding:8px 0 16px" id="mail-preview-actions">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:13px">
+      <tr bgcolor="#f9fafb" style="background:#f9fafb">
+        <th width="55%" style="padding:7px 10px;text-align:left;font-size:11px;font-weight:bold;color:#6b7280;text-transform:uppercase;letter-spacing:.5px">Action</th>
+        <th width="25%" style="padding:7px 10px;text-align:left;font-size:11px;font-weight:bold;color:#6b7280;text-transform:uppercase;letter-spacing:.5px">Responsable</th>
+        <th width="20%" style="padding:7px 10px;text-align:left;font-size:11px;font-weight:bold;color:#6b7280;text-transform:uppercase;letter-spacing:.5px">Échéance</th>
+      </tr>
+      ${actHTML}
+    </table>
+  </td></tr>
+  ${v.conclusion ? `<tr><td style="padding:0 0 6px;border-bottom:2px solid #f3f4f6"><p style="margin:0;font-size:12px;font-weight:bold;color:#374151;letter-spacing:1px;text-transform:uppercase">✦ Conclusion</p></td></tr><tr><td style="padding:10px 0 16px;font-size:13px;color:#374151;white-space:pre-wrap">${v.conclusion}</td></tr>` : ''}
+  <tr><td style="padding:16px 0 4px;border-top:1px solid #e5e7eb;font-size:14px">
+    <p style="margin:0 0 6px">Je reste disponible pour tout échange sur ces points.</p>
+    <p style="margin:0 0 2px">Bien cordialement,</p>
+    <p style="margin:6px 0 0;font-weight:bold;font-size:14px">${v.visiteur || 'Le responsable multisite'}</p>
+  </td></tr>
+  <tr><td style="padding:12px 0 0;border-top:1px solid #e5e7eb">
+    <p style="margin:0;font-size:11px;color:#9ca3af">RetailOps 360 — Responsable Multisite</p>
+  </td></tr>
+</table>`;
+
+  const preview = document.getElementById('mail-body-preview');
+  if (preview) preview.innerHTML = previewHTML;
+  document.getElementById('mail-body-text').value = body;
+
+  // Alimenter le plan d'actions
+  mailActions = koKeys.map(k => {
+    const act = v.koActions?.[k] || koActions[k] || {};
+    return {
+      ko: getCritLabel(k),
+      action: act.action || '',
+      resp: act.resp || '',
+      date: act.date || '',
+      status: 'open'
+    };
+  });
+  renderActionPlan();
+}
+
+function regenerateMail() {
+  const v = savedVisits[0] || currentVisit;
+  renderMailSection(v);
+}
+
+function renderActionPlan() {
+  const tbody = document.getElementById('action-plan-body');
+  if (mailActions.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-3);padding:1.5rem;font-size:13px">Aucune non-conformité — plan d\'actions vide</td></tr>';
+    return;
+  }
+  tbody.innerHTML = mailActions.map((a, i) => `
+    <tr>
+      <td><div class="action-ko-lbl">⚠ ${a.ko}</div></td>
+      <td><input type="text" value="${a.action}" placeholder="Décrire l'action…" oninput="mailActions[${i}].action=this.value"></td>
+      <td><input type="text" value="${a.resp}" placeholder="Prénom Nom" oninput="mailActions[${i}].resp=this.value"></td>
+      <td><input type="date" value="${a.date}" oninput="mailActions[${i}].date=this.value"></td>
+      <td>
+        <select onchange="mailActions[${i}].status=this.value;renderActionStatus(this)">
+          <option value="open" ${a.status==='open'?'selected':''}>🔴 Ouvert</option>
+          <option value="progress" ${a.status==='progress'?'selected':''}>🟡 En cours</option>
+          <option value="done" ${a.status==='done'?'selected':''}>🟢 Clôturé</option>
+        </select>
+      </td>
+    </tr>`).join('');
+}
+
+function renderActionStatus(sel) {
+  sel.style.background = sel.value==='done' ? '#D1FAE5' : sel.value==='progress' ? '#FEF3C7' : '#FFE4E6';
+  sel.style.color = sel.value==='done' ? '#047857' : sel.value==='progress' ? '#B45309' : '#BE123C';
+}
+
+function addManualAction() {
+  mailActions.push({ ko:'Action manuelle', action:'', resp:'', date:'', status:'open' });
+  renderActionPlan();
+}
+
+function injectActionsIntoMail() {
+  // Mettre à jour le tableau des actions dans l'aperçu HTML
+  const buildActHTML = window._buildActHTML;
+  const newActHTML = buildActHTML ? buildActHTML(mailActions) :
+    mailActions.map((a, i) => {
+      const num = String(i+1).padStart(2,'0');
+      return `<tr style="border-bottom:1px solid #f3f4f6">
+        <td style="padding:8px 10px;font-size:13px"><span style="background:#EEF2FF;color:#5B5FED;padding:2px 6px;font-size:11px;font-weight:bold;margin-right:6px">${num}</span>${a.action || a.ko}</td>
+        <td style="padding:8px 10px;font-size:13px;color:#374151">👤&nbsp;${a.resp || '___________'}</td>
+        <td style="padding:8px 10px;font-size:13px">📅&nbsp;${a.date || '___/___/___'}</td>
+      </tr>`;
+    }).join('');
+
+  // Mettre à jour dans l'aperçu HTML visible
+  const preview = document.getElementById('mail-body-preview');
+  if (preview) {
+    const actionsTd = preview.querySelector('#mail-preview-actions table tbody') ||
+                      preview.querySelector('#mail-preview-actions table');
+    if (actionsTd) {
+      // Reconstruire le tableau complet
+      const tbl = actionsTd.closest ? actionsTd.closest('table') : actionsTd;
+      const tbody = tbl.querySelector('tbody');
+      if (tbody) tbody.innerHTML = newActHTML;
+    } else {
+      // Régénérer tout le mail si la structure a changé
+      const v = savedVisits[0] || currentVisit;
+      if (v) renderMailSection(v);
+    }
+  }
+
+  // Mettre à jour le texte brut aussi
+  const lines = mailActions.map((a, i) =>
+    `  ${String(i+1).padStart(2,'0')}.  ${a.action || a.ko}\n       👤  ${a.resp || '___________'}\n       📅  ${a.date || '___/___/___'}`
+  ).join('\n\n');
+  const ta = document.getElementById('mail-body-text');
+  if (ta) ta.value = ta.value.replace(/📋 PLAN D'ACTIONS CORRECTIVES[\s\S]*?(?=\n\n(?!\s*\d)|Je reste|$)/, `📋 PLAN D'ACTIONS CORRECTIVES\n` + '┄'.repeat(42) + '\n\n' + lines);
+
+  const btn = document.querySelector('[onclick="injectActionsIntoMail()"]');
+  if (btn) { const orig = btn.textContent; btn.textContent = '✓ Injecté !'; btn.style.background = 'var(--emerald)'; setTimeout(() => { btn.textContent = orig; btn.style.background = ''; }, 2000); }
+}
+
+function copyMailFull() {
+  const btn = event.target;
+  const preview = document.getElementById('mail-body-preview');
+  const plain   = document.getElementById('mail-body-text').value;
+  // Copier en HTML riche (colle formaté dans Gmail/Outlook)
+  try {
+    const htmlContent = preview.innerHTML;
+    const blob = new Blob([htmlContent], {type:'text/html'});
+    const blobPlain = new Blob([plain], {type:'text/plain'});
+    const item = new ClipboardItem({'text/html': blob, 'text/plain': blobPlain});
+    navigator.clipboard.write([item]).then(() => {
+      btn.textContent = '✓ Copié (formaté) !';
+      btn.style.background = 'var(--emerald)';
+      setTimeout(() => { btn.textContent = '📋 Copier le mail'; btn.style.background = ''; }, 2200);
+    }).catch(() => {
+      navigator.clipboard.writeText(plain).then(() => {
+        btn.textContent = '✓ Copié';
+        setTimeout(() => { btn.textContent = '📋 Copier le mail'; }, 2000);
+      });
+    });
+  } catch(e) {
+    navigator.clipboard.writeText(plain).then(() => {
+      btn.textContent = '✓ Copié';
+      setTimeout(() => { btn.textContent = '📋 Copier le mail'; }, 2000);
+    });
+  }
+}
+
+function toggleMailView() {
+  const preview = document.getElementById('mail-body-preview');
+  const textarea = document.getElementById('mail-body-text');
+  const btn = document.getElementById('mail-view-toggle');
+  if (textarea.style.display === 'none') {
+    textarea.style.display = 'block';
+    preview.style.display = 'none';
+    btn.textContent = 'Aperçu';
+  } else {
+    textarea.style.display = 'none';
+    preview.style.display = 'block';
+    btn.textContent = 'Texte brut';
+  }
+}
+
+function openMailClient() {
+  const to = document.getElementById('mail-to').value || '';
+  const cc = document.getElementById('mail-cc').value || '';
+  const subject = encodeURIComponent(document.getElementById('mail-subject').value);
+  const body = encodeURIComponent(document.getElementById('mail-body-text').value);
+  const ccParam = cc ? `cc=${encodeURIComponent(cc)}&` : '';
+  window.location.href = `mailto:${to}?${ccParam}subject=${subject}&body=${body}`;
+}
+
+// ═══════════════════════════════════════ TOP / BOTTOM 10 + GEO
+
+function renderTopBottom(sorted) {
+  const wrap = document.getElementById('top-bottom-grid');
+  if (!sorted || sorted.length === 0) { wrap.innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="empty-msg">Aucune donnée disponible</div></div>'; return; }
+
+  const top10 = sorted.slice(0, 10);
+  const bottom10 = [...sorted].reverse().slice(0, 10);
+
+  const makeRows = (list, isTop) => list.map((v, i) => {
+    const col = scoreColor(v.globalPct);
+    const posStyle = isTop
+      ? (i === 0 ? 'background:var(--lemon-bg);color:#B45309' : i === 1 ? 'background:#E5E7EB;color:#4B5563' : i === 2 ? 'background:var(--orange-bg);color:#B45309' : 'background:var(--surface-2);color:var(--text-3)')
+      : 'background:var(--rose-bg);color:var(--rose)';
+    return `<div class="rank-mini-row">
+      <div class="rank-mini-pos" style="${posStyle}">${isTop ? i+1 : '⚠'}</div>
+      <div class="rank-mini-name">${v.magasin}</div>
+      <div class="rank-mini-score" style="color:${col}">${v.globalPct}%</div>
+    </div>`;
+  }).join('');
+
+  wrap.innerHTML = `
+    <div>
+      <div class="top-section-title" style="color:#B45309">🏆 Top ${Math.min(10,top10.length)} magasins</div>
+      ${makeRows(top10, true)}
+    </div>
+    <div>
+      <div class="top-section-title" style="color:var(--rose)">⚠ Bottom ${Math.min(10,bottom10.length)} magasins</div>
+      ${makeRows(bottom10, false)}
+    </div>`;
+}
+
+function renderGeoMap(sorted) {
+  const wrap = document.getElementById('geo-store-grid');
+  if (!sorted || sorted.length === 0) { wrap.innerHTML = '<div class="empty"><div class="empty-msg">Aucune donnée</div></div>'; return; }
+  wrap.innerHTML = sorted.map(v => {
+    const cls = v.globalPct >= 90 ? 'good' : v.globalPct >= 80 ? 'warn' : 'crit';
+    const icon = v.globalPct >= 90 ? '🟢' : v.globalPct >= 80 ? '🟡' : '🔴';
+    const colStyle = v.globalPct >= 90 ? 'color:#047857' : v.globalPct >= 80 ? 'color:#B45309' : 'color:#BE123C';
+    return `<div class="geo-store-item ${cls}">
+      <span>${icon}</span>
+      <span class="geo-store-name">${v.magasin}</span>
+      <span class="geo-store-score" style="${colStyle}">${v.globalPct}%</span>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════ PWA INSTALL
+
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const banner = document.getElementById('install-banner');
+  if (banner && !localStorage.getItem('pwa-dismissed')) {
+    banner.style.display = 'flex';
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('btn-install-pwa');
+  if (btn) {
+    btn.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          document.getElementById('install-banner').style.display = 'none';
+        }
+        deferredPrompt = null;
+      } else {
+        alert('Pour installer RetailOps 360 :\n\n📱 iPhone/iPad : Safari → Partager → "Sur l\'écran d\'accueil"\n💻 Chrome/Edge : Menu ⋮ → "Installer l\'application"\n🤖 Android : Chrome → Menu → "Ajouter à l\'écran d\'accueil"');
+      }
+    });
+  }
+});
+
+function dismissInstall() {
+  document.getElementById('install-banner').style.display = 'none';
+  localStorage.setItem('pwa-dismissed', '1');
+}
+
+// ═══════════════════════════════════════ START
+init();
+
+// ═══════════════════════════════════════════════════════════════════
+// SYSTÈME MULTI-BROUILLONS
+// ═══════════════════════════════════════════════════════════════════
+
+let currentDraftId = null;
+
+function getDrafts() {
+  try { return JSON.parse(localStorage.getItem('ra_drafts') || '[]'); }
+  catch(e) { return []; }
+}
+function saveDrafts(drafts) {
+  try {
+    localStorage.setItem('ra_drafts', JSON.stringify(drafts));
+  } catch(e) {
+    if (e.name === 'QuotaExceededError' || e.code === 22) {
+      try {
+        // Marquer _photosStripped pour ne pas écraser les photos en mémoire au resume
+        const slim = drafts.map(d => ({...d, photos:{}, _photosStripped:true}));
+        localStorage.setItem('ra_drafts', JSON.stringify(slim));
+        showAutoSaveStatus('⚠ Photos non sauvegardées — stockage plein', '#F59E0B');
+        // Proposer export immédiat avec les photos encore en mémoire
+        if (currentDraftId && typeof photos !== 'undefined' && Object.keys(photos).length > 0) {
+          setTimeout(() => {
+            if (confirm('Stockage plein : les photos ne peuvent pas etre sauvegardees.\n\nExporter maintenant avec les photos (AirDrop) ?')) {
+              exportDraft(currentDraftId);
+            }
+          }, 400);
+        }
+      } catch(e2) {
+        showAutoSaveStatus('✗ Stockage plein — impossible de sauvegarder', '#EF4444');
+      }
+    }
+  }
+}
+
+function showAutoSaveStatus(msg, color) {
+  let el = document.getElementById('autosave-status');
+  if (!el) return;
+  el.textContent = msg;
+  el.style.color = color || 'var(--brand)';
+  el.style.opacity = '1';
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.style.opacity = '0', 3000);
+}
+
+function initDrafts() {
+  migrateOldDraft();
+  updateDraftFAB();
+}
+
+// Migration depuis l'ancien système (clé ra_draft → ra_drafts)
+function migrateOldDraft() {
+  const oldRaw = localStorage.getItem('ra_draft');
+  if (!oldRaw) return;
+  try {
+    const old = JSON.parse(oldRaw);
+    const hasData = Object.keys(old.scores || {}).length > 0 ||
+                    Object.values(old.form || {}).some(v => v && v !== '');
+    if (hasData) {
+      const drafts = getDrafts();
+      if (!drafts.some(d => d.id === 'migrated_legacy')) {
+        const magasin = old.form?.['v-magasin-libre'] || old.form?.['v-magasin'] || old.magasin || 'Brouillon récupéré';
+        const date    = old.form?.['v-date'] || old.savedAt?.slice(0,10) || '';
+        drafts.push({
+          id: 'migrated_legacy',
+          savedAt: old.savedAt || new Date().toISOString(),
+          magasin, date,
+          form:      old.form      || {},
+          scores:    old.scores    || {},
+          comments:  old.comments  || {},
+          koActions: old.koActions || {},
+          photos:    old.photos    || {},
+          conclusion: old.conclusion || '',
+        });
+        saveDrafts(drafts);
+      }
+    }
+  } catch(e) {}
+  localStorage.removeItem('ra_draft');
+}
+
+function updateDraftFAB() {
+  const drafts = getDrafts();
+  const fab   = document.getElementById('draft-fab');
+  const badge = document.getElementById('draft-fab-count');
+  if (!fab) return;
+  if (drafts.length > 0) {
+    fab.classList.add('visible');
+    if (badge) badge.textContent = drafts.length;
+  } else {
+    fab.classList.remove('visible');
+  }
+}
+
+// ── Sauvegarder ──────────────────────────────────────────────────
+function saveDraft() {
+  const magasinLibre = document.getElementById('v-magasin-libre')?.value || '';
+  const magasinSel   = document.getElementById('v-magasin');
+  const magasinLabel = magasinLibre ||
+    (magasinSel ? magasinSel.options[magasinSel.selectedIndex]?.text : '') || '';
+  const date = document.getElementById('v-date')?.value || '';
+
+  if (!magasinLabel && !date) {
+    alert('Saisissez au moins le magasin ou la date avant de sauvegarder.');
+    return;
+  }
+
+  const formIds = ['v-magasin','v-magasin-libre','v-date','v-heure',
+                   'v-type','v-visiteur','v-contexte','v-kpi-comment','tc-comment-global'];
+  const form = {};
+  formIds.forEach(id => { const el = document.getElementById(id); if (el) form[id] = el.value; });
+  form._kpis = getKPIs();
+
+  const drafts = getDrafts();
+  if (currentDraftId) {
+    const idx = drafts.findIndex(d => d.id === currentDraftId);
+    if (idx !== -1) {
+      drafts[idx] = { ...drafts[idx], savedAt: new Date().toISOString(),
+        magasin: magasinLabel, date, form,
+        scores: {...scores}, comments: {...comments},
+        koActions: {...koActions}, photos: {...photos}, dismissedKOs: {...dismissedKOs},
+        conclusion: currentVisit.conclusion || '' };
+      saveDrafts(drafts);
+      updateDraftFAB();
+      flashDraftBtn('✓ Mis à jour');
+      return;
+    }
+  }
+  const draft = {
+    id: 'draft_' + Date.now(),
+    savedAt: new Date().toISOString(),
+    magasin: magasinLabel, date, form,
+    scores: {...scores}, comments: {...comments},
+    koActions: {...koActions}, photos: {...photos},
+    conclusion: currentVisit.conclusion || '',
+  };
+  drafts.unshift(draft);
+  if (drafts.length > 20) drafts.length = 20;
+  saveDrafts(drafts);
+  currentDraftId = draft.id;
+  updateDraftFAB();
+  flashDraftBtn('✓ Sauvegardé');
+}
+
+function flashDraftBtn(msg) {
+  const btn = document.querySelector('.btn-draft');
+  if (btn) { btn.textContent = msg; setTimeout(() => btn.textContent = '💾 Brouillon', 1800); }
+}
+
+// ── Modal ────────────────────────────────────────────────────────
+function openDraftModal() {
+  renderDraftList();
+  document.getElementById('draft-overlay')?.classList.add('open');
+}
+function closeDraftModal(e) {
+  if (!e || e.target === document.getElementById('draft-overlay')) {
+    document.getElementById('draft-overlay')?.classList.remove('open');
+  }
+}
+
+function renderDraftList() {
+  const drafts = getDrafts();
+  const list = document.getElementById('draft-list');
+  if (!list) return;
+  if (drafts.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:32px;color:var(--text-2);font-size:14px">Aucun brouillon sauvegardé</div>';
+    return;
+  }
+  list.innerHTML = drafts.map(d => {
+    const dt = new Date(d.savedAt);
+    const timeStr = dt.toLocaleDateString('fr-FR') + ' à ' + dt.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+    const okCount = Object.values(d.scores||{}).filter(v=>v==='ok').length;
+    const koCount = Object.values(d.scores||{}).filter(v=>v==='ko').length;
+    const isCurrent = d.id === currentDraftId;
+    const visitDate = d.date ? new Date(d.date+'T12:00:00').toLocaleDateString('fr-FR') : '—';
+    return `
+      <div class="draft-card" style="${isCurrent ? 'border-color:var(--brand,#5B5FED)' : ''}">
+        <div class="draft-card-hd">
+          <div class="draft-card-store">🏪 ${d.magasin || 'Sans nom'}${isCurrent ? '&nbsp;<span style="font-size:11px;color:var(--brand)">● en cours</span>' : ''}</div>
+          <div class="draft-card-time">${timeStr}</div>
+        </div>
+        <div class="draft-card-meta">📅 Visite prévue : ${visitDate}</div>
+        <div class="draft-card-progress">
+          <span class="draft-tag ok">✓ ${okCount} OK</span>
+          ${koCount > 0 ? `<span class="draft-tag ko">✕ ${koCount} KO</span>` : ''}
+          <span class="draft-tag">${okCount + koCount} points saisis</span>
+        </div>
+        <div class="draft-card-actions">
+          <button class="draft-resume-btn" onclick="resumeDraft('${d.id}')">📂 Reprendre</button>
+          <button class="draft-export-btn" onclick="exportDraft('${d.id}')" title="Exporter pour AirDrop">📤</button>
+          <button class="draft-del-btn" onclick="deleteDraft('${d.id}')">🗑</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ── Reprendre ────────────────────────────────────────────────────
+function resumeDraft(draftId) {
+  const drafts = getDrafts();
+  const draft = drafts.find(d => d.id === draftId);
+  if (!draft) return;
+
+  // 1. Restaurer variables d'état
+  scores       = {...(draft.scores       || {})};
+  comments     = {...(draft.comments     || {})};
+  koActions    = {...(draft.koActions    || {})};
+  // Si les photos ont été retirées du stockage (quota), garder celles en mémoire
+  if (!draft._photosStripped || Object.keys(photos||{}).length === 0) {
+    photos = {...(draft.photos || {})};
+  }
+  dismissedKOs = {...(draft.dismissedKOs || {})};
+  currentDraftId = draftId;
+  if (draft.conclusion) currentVisit.conclusion = draft.conclusion;
+
+  // 2. Fermer modal + aller sur visite
+  closeDraftModal();
+  nav('visite');
+
+  // 3. Reconstruire la checklist (comments déjà dans les variables, utilisés dans le template)
+  buildChecklist();
+
+  // 4. Restaurer les champs formulaire
+  const f = draft.form || {};
+  Object.entries(f).forEach(([id, val]) => {
+    if (id === '_kpis') return;
+    const el = document.getElementById(id);
+    if (el) el.value = val;
+  });
+
+  // 5. Restaurer KPIs
+  if (f._kpis) {
+    Object.entries(f._kpis).forEach(([kid, kdata]) => {
+      const v1el = document.getElementById('kpi-' + kid + '-v1');
+      const v2el = document.getElementById('kpi-' + kid + '-v2');
+      if (v1el) { v1el.value = kdata.v1 || ''; v1el.dispatchEvent(new Event('input')); }
+      if (v2el) { v2el.value = kdata.v2 || ''; v2el.dispatchEvent(new Event('input')); }
+    });
+  }
+
+  // 6. Appliquer scores aux boutons
+  Object.entries(scores).forEach(([key, val]) => {
+    const crit = document.getElementById('crit-' + key);
+    if (!crit) return;
+    const btns = crit.querySelectorAll('.sbtn');
+    const map = {ok:0, ko:1, na:2};
+    if (btns[map[val]] !== undefined) btns[map[val]].className = 'sbtn ' + val;
+    // Afficher panneau extra si KO, commentaire ou photo
+    const extra = document.getElementById('extra-' + key);
+    if (extra && (val === 'ko' || comments[key] || (photos[key] && photos[key].length > 0))) {
+      extra.style.display = 'block';
+    }
+  });
+
+  // Items avec commentaire ou photo mais pas forcément KO
+  new Set([...Object.keys(comments), ...Object.keys(photos)]).forEach(key => {
+    const extra = document.getElementById('extra-' + key);
+    if (extra) extra.style.display = 'block';
+  });
+
+  // 7. Restaurer photos
+  Object.keys(photos).forEach(key => {
+    if (photos[key] && photos[key].length > 0) renderThumbs(key);
+  });
+
+  // 8. Mettre à jour score global + plan d'action
+  updateAllScores();
+  renderGlobalScore();
+  renderKOActions();
+  updateDraftFAB();
+}
+
+// ── Supprimer ────────────────────────────────────────────────────
+function deleteDraft(draftId) {
+  if (!confirm('Supprimer ce brouillon définitivement ?')) return;
+  clearDraftById(draftId);
+  if (currentDraftId === draftId) currentDraftId = null;
+  renderDraftList();
+  updateDraftFAB();
+}
+
+function clearDraftById(draftId) {
+  if (!draftId) return;
+  saveDrafts(getDrafts().filter(d => d.id !== draftId));
+}
+
+// ── Supprimer plan d'action KO (sans effacer le score) ──────────
+function deleteKOAction(key) {
+  if (!confirm("Retirer ce point du plan d'action ?\n(Le point reste KO dans la checklist mais n'apparaîtra plus dans le plan)")) return;
+  dismissedKOs[key] = true;
+  delete koActions[key];
+  renderKOActions();
+}
+
+
+// ═══ AUTO-SAVE BROUILLON (30 secondes) ═══════════════════════════
+
+function autoSaveDraft() {
+  // N'auto-save que s'il y a des données saisies
+  const hasScores  = Object.keys(scores).length > 0;
+  const magasin    = document.getElementById('v-magasin-libre')?.value || document.getElementById('v-magasin')?.value || '';
+  const hasKpis    = !!document.querySelector('.kpi-evol:not(.ev-neu)');
+  if (!hasScores && !magasin && !hasKpis) return;
+
+  const formIds = ['v-magasin','v-magasin-libre','v-date','v-heure','v-type','v-visiteur','v-contexte','v-kpi-comment','tc-comment-global'];
+  const form = {};
+  formIds.forEach(id => { const el = document.getElementById(id); if (el) form[id] = el.value; });
+  form._kpis = getKPIs();
+  const magLabel = document.getElementById('v-magasin-libre')?.value ||
+    (() => { const s = document.getElementById('v-magasin'); return s ? s.options[s.selectedIndex]?.text : ''; })() || '';
+  const date = document.getElementById('v-date')?.value || '';
+
+  const drafts = getDrafts();
+  if (currentDraftId) {
+    const idx = drafts.findIndex(d => d.id === currentDraftId);
+    if (idx !== -1) {
+      drafts[idx] = { ...drafts[idx], savedAt: new Date().toISOString(), magasin: magLabel, date, form,
+        scores:{...scores}, comments:{...comments}, koActions:{...koActions}, photos:{...photos},
+        dismissedKOs:{...dismissedKOs}, conclusion: currentVisit.conclusion || '' };
+      saveDrafts(drafts);
+      showAutoSaveStatus('✓ Auto-sauvegardé ' + new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}));
+      return;
+    }
+  }
+  // Pas de brouillon en cours → créer silencieusement
+  const draft = { id: 'draft_' + Date.now(), savedAt: new Date().toISOString(),
+    magasin: magLabel, date, form, scores:{...scores}, comments:{...comments},
+    koActions:{...koActions}, photos:{...photos}, dismissedKOs:{...dismissedKOs},
+    conclusion: currentVisit.conclusion || '' };
+  if (!magLabel && !Object.keys(scores).length) return;
+  drafts.unshift(draft);
+  if (drafts.length > 20) drafts.length = 20;
+  saveDrafts(drafts);
+  currentDraftId = draft.id;
+  updateDraftFAB();
+  showAutoSaveStatus('✓ Auto-sauvegardé ' + new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}));
+}
+
+
+// ═══ EXPORT / IMPORT BROUILLON (AirDrop) ══════════════════════
+
+function exportDraft(draftId) {
+  let draft = getDrafts().find(d => d.id === draftId);
+  if (!draft) return;
+  draft = {...draft};
+  // Pour le brouillon actif : toujours utiliser les photos en mémoire (plus fiables que localStorage)
+  if (draftId === currentDraftId && typeof photos !== 'undefined') {
+    draft.photos = {...photos};
+  }
+  const slug = (draft.magasin||'brouillon').replace(/[^a-z0-9]/gi,'-').toLowerCase().slice(0,30);
+  const filename = 'visite-' + slug + '-' + (draft.date||new Date().toISOString().slice(0,10)) + '.json';
+  const json = JSON.stringify({_type:'retailops_draft',_v:1,draft});
+  const blob = new Blob([json], {type:'application/json'});
+
+  // iOS/Android : ouvrir directement la feuille de partage (AirDrop, Mail, etc.)
+  if (navigator.canShare && navigator.share) {
+    const file = new File([blob], filename, {type:'application/json'});
+    if (navigator.canShare({files:[file]})) {
+      navigator.share({files:[file], title:'Brouillon RetailOps', text: draft.magasin || 'Visite magasin'})
+        .catch(e => { if (e.name !== 'AbortError') fallbackDownload(blob, filename); });
+      return;
+    }
+  }
+  // Desktop : téléchargement classique
+  fallbackDownload(blob, filename);
+}
+
+function fallbackDownload(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importDraftFile(input) {
+  const file = input.files[0];
+  if (!file) return;
+  input.value = '';
+  // Essai avec file.text() (moderne), fallback FileReader
+  if (file.text) {
+    file.text().then(t => parseDraftText(t)).catch(() => {
+      const fr = new FileReader();
+      fr.onload = e => parseDraftText(e.target.result);
+      fr.readAsText(file);
+    });
+  } else {
+    const fr = new FileReader();
+    fr.onload = e => parseDraftText(e.target.result);
+    fr.readAsText(file);
+  }
+}
+
+function parseDraftText(text) {
+  try {
+    const clean = text.replace(/^\uFEFF/, '').trim();
+    const payload = JSON.parse(clean);
+    let draft = (payload._type === 'retailops_draft' && payload.draft)
+      ? payload.draft
+      : (payload.scores || payload.form || payload.magasin) ? payload : null;
+    if (!draft) { alert('Format non reconnu.'); return; }
+    const drafts = getDrafts();
+    const existing = drafts.find(d => d.magasin === draft.magasin && d.date === draft.date);
+    if (existing) {
+      if (!confirm("Un brouillon pour '" + (draft.magasin||'?') + "' du " + (draft.date||'?') + " existe déjà. Importer quand même ?")) return;
+    }
+    draft.id = 'imported_' + Date.now();
+    try {
+      drafts.unshift(draft);
+      saveDrafts(drafts);
+    } catch(storageErr) {
+      // Quota dépassé → sauvegarder sans les photos
+      draft.photos = {};
+      const drafts2 = getDrafts();
+      drafts2.unshift(draft);
+      saveDrafts(drafts2);
+      showAutoSaveStatus('⚠ Importé sans photos (stockage limité)', '#F59E0B');
+    }
+    updateDraftFAB();
+    renderDraftList();
+    alert('✓ Brouillon importé : ' + (draft.magasin || 'Sans nom'));
+  } catch(err) {
+    alert('Erreur import : ' + err.message);
+  }
+}
+
+// Démarrer l'auto-save
+setInterval(autoSaveDraft, 30000);
+
+</script>
+<script>
+// ═══ SERVICE WORKER — MISE À JOUR FORCÉE ═══
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').then(reg => {
+    reg.update(); // forcer vérification immédiate
+    reg.addEventListener('updatefound', () => {
+      const nw = reg.installing;
+      if (nw) {
+        nw.addEventListener('statechange', () => {
+          if (nw.state === 'installed' && navigator.serviceWorker.controller) {
+            nw.postMessage({type:'SKIP_WAITING'});
+          }
+        });
+      }
+    });
+  }).catch(() => {});
+  let refreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!refreshing) { refreshing = true; window.location.reload(); }
+  });
+}
+</script>
+</body>
+</html>
